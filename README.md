@@ -90,12 +90,19 @@ Pierre did nothing. MEP closed the CI feedback loop autonomously.
 
 ---
 
+## Lexicon
+
+New to the terminology? The **[MEP Lexicon](LEXICON.md)** defines every term — from [Meat Puppet](LEXICON.md#meat-puppet) to [Tour Sheet](LEXICON.md#tour-sheet) to [Do Nothing Security](LEXICON.md#do-nothing-security). Start there if this is your first read.
+
+---
+
 ## Repository Structure
 
 ```
 mep-protocol/
 ├── LICENSE                    AGPL-3.0
 ├── README.md                  This file
+├── LEXICON.md                 Protocol terminology and lineage
 ├── NUKA-LOG.md                Human authorship audit trail
 ├── CHANGELOG.md               Protocol version history
 ├── CONTRIBUTING.md            How to propose changes

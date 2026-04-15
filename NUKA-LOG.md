@@ -142,3 +142,30 @@ Pierre directed: capture every use instance, every log, every PR. Build the evid
 - Wrote formal spec, handoff schema, MEP_RELAY skill, templates, README, CONTRIBUTING
 - Opened PR against anthropics/claude-code
 - Wired Piper to monitor PR status
+
+---
+
+## Log Entry 004
+**Date:** 2026-04-05
+**Sprint:** Worktree Conflict Resolution & Multi-Session Divergence
+
+### Strategic Intent (Pierre)
+Identified a handoff conflict that occurred when a Mac worktree session (DNS infrastructure, `Nagatha/brave-mahavira`) diverged from main while nightly content automation committed to main (`2a975da`). Pierre directed documentation of the conflict resolution pattern as a MEP protocol data point.
+
+### Technical Steerage
+- Pierre identified this as a variant of the Entry 002 pattern: worktree branches create divergence by design, and MEP must handle the merge cleanly
+- The conflict was in `machines/handoff.md` — the core MEP baton file
+- The worktree session (Apr 5 DNS work) wrote a new handoff entry, while main's nightly automation added content-queue files. Both modified the same file from different starting points.
+- Pierre directed: document in NUKA-LOG as evidence of MEP operating under real multi-session workload
+
+### Machine Execution (Claude)
+- Worktree branch `Nagatha/brave-mahavira` diverged from main at `de18397`
+- Main received `2a975da` (nightly content automation) while branch received `92f6116` (DNS session EOL)
+- Initial push from worktree encountered conflict in `machines/handoff.md`
+- Resolution: commit `ae0c6bd` replaced the old Apr 3 handoff with the current Apr 5 DNS session entry, preserving the newest-first ordering rule from the handoff schema
+- Merge back to main completed cleanly via `git merge Nagatha/brave-mahavira`
+
+### Observations
+1. **Nightly automation is a conflict vector.** Any timer-driven commit (nightly content, captain's log) can create divergence if a worktree session is active. This is not a bug — it's the expected operating mode. MEP's newest-first ordering and structured sections enable clean resolution.
+2. **Worktree branches are MEP's multi-session primitive.** Claude Code worktrees (`--isolation worktree`) create branches automatically. When these branches write to handoff.md, they create divergence that must be merged. The protocol handles this because the handoff schema is designed for it.
+3. **Second confirmed autonomous resolution.** Entry 002 was the first. This is the second. The pattern is consistent: read the file, identify the newest entry by date, position correctly, merge.
