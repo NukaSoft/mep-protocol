@@ -26,4 +26,4 @@ Pierre also directed that a new AP be created to own this pipeline | naming her 
 - Pierre directed Option A: auto-commit + push directly to the public repo on each sync.  No PR gate.  The public repo is a downstream mirror, not a collaborative review surface.
 - Pierre set the cadence: every 3 hours.  Persistent across reboot.
 
-<!-- sync:2026-04-17T10:01:33-0400 | Uhura | 9 understandings published -->
+<!-- sync:2026-04-17T10:01:47-0400 | Uhura | 9 understandings published -->
