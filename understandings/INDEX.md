@@ -16,3 +16,6 @@ Aha moments captured the moment they clicked.  Compounding memory across session
 | 0007 | [Grease Under the Fingernails](0007-grease-under-the-fingernails.md) | 2026-04-14 |
 | 0008 | [Theory of Harmonics](0008-theory-of-harmonics.md) | 2026-04-14 |
 | 0009 | [Eating the Sin of Others Is Manhood](0009-eating-the-sin-of-others.md) | 2026-04-14 |
+| 10 | [Local Inference Pays For Its Own Hardware in Months, Not Years](0010-local-inference-roi.md) | 2026-04-20 |
+| 11 | [A Pidgin Language Formed Inside Our Own MEP Handoffs](0011-emergent-pidgin-mep-handoffs.md) | 2026-04-30 |
+| 0011 | [Voiceprint Is The Headshot — Opus 4.7 Earned The Trust](0011-voiceprint-is-the-headshot.md) | 2026-04-25 |
