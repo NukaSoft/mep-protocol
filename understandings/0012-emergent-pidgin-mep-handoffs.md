@@ -1,8 +1,8 @@
 ---
-number: 11
+number: 12
 title: A Pidgin Language Formed Inside Our Own MEP Handoffs
 date: 2026-04-30
-tags: [mep, multi-agent, linguistics, emergence, ai-safety, research, ip]
+tags: [mep, multi-agent, linguistics, emergence, ai-safety, research, ip, paper-candidate]
 ---
 
 # A Pidgin Language Formed Inside Our Own MEP Handoffs

@@ -108,7 +108,8 @@ mep-protocol/
 ├── CONTRIBUTING.md            How to propose changes
 ├── spec/
 │   ├── mep-protocol.md        Full protocol specification
-│   └── handoff-schema.md      BNF grammar + conformance tests
+│   ├── handoff-schema.md      BNF grammar + conformance tests
+│   └── meep-readonly-v1.md    Read-only peer-agent context surface (sibling spec)
 ├── templates/
 │   ├── CLAUDE.md              Drop-in session protocol template
 │   ├── handoff.md             Blank baton template

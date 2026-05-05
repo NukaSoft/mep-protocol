@@ -807,6 +807,19 @@ Option 3 is the most likely path — the inbox pipeline already exists and every
 
 ---
 
+## Sibling Spec: MEEP-ReadOnly-v1
+
+**Added:** April 29, 2026
+**Spec:** [`meep-readonly-v1.md`](meep-readonly-v1.md)
+
+A read-only context surface for **external peer agents** that do not share the repo, do not run EOL, and may go a week or more between reads (Hastings/Leo on Grok is the first instance).  Small, public-but-unlinked Markdown page at a canonical URL.  Unidirectional, agent-scoped, pull-on-demand.
+
+Distinct from the Standing Standup (Component 9): the standup is project-scoped and bidirectional; MEEP-ReadOnly-v1 is agent-scoped and unidirectional.  Contributions from the consuming agent flow back through the existing conversation-URL mechanism (Component 7).
+
+First instance: `https://nukasoft.ai/leo` (Hastings).  See the sibling spec for required sections, token budget, update model, pruning semantics, and security defaults.
+
+---
+
 ## Etymology
 
 The term "meat puppet" refers to the human operator who previously served as the manual message relay between AI sessions -- reading output on one machine, walking to another, and re-typing it. The protocol was named on March 22, 2026 -- the 62nd birthday of its architect, Pierre Hulsebus.
