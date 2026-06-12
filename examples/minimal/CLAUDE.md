@@ -1,14 +1,14 @@
-# My Project — AI Session Protocol (MEP)
+﻿# My Project â€” AI Session Protocol (MEP)
 
-## ⚡ Session Protocol (MANDATORY)
+## âš¡ Session Protocol (MANDATORY)
 
-### On Session Start — BEFORE responding to the user:
+### On Session Start â€” BEFORE responding to the user:
 1. Run `git pull`
-2. Read `handoff.md` — load context from last session
-3. Briefly tell the user what's pending (2–3 lines)
+2. Read `handoff.md` â€” load context from last session
+3. Briefly tell the user what's pending (2â€“3 lines)
 
-### On Session End — triggered by: `/eol`, `done`, `wrap up`, `heading out`
-1. Update `handoff.md` — newest entry on top, three sections: what happened / pending / watch out
+### On Session End â€” triggered by: `/eol`, `done`, `wrap up`, `heading out`
+1. Update `handoff.md` â€” newest entry on top, three sections: what happened / pending / watch out
 2. `git add handoff.md && git commit -m "EOL: [summary]" && git push`
 3. Say: "End of Line."
 

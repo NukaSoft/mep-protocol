@@ -1,4 +1,4 @@
-# MEP Explorations
+﻿# MEP Explorations
 
 Dead ends, roads taken and rejected, ideas in flight.  This is the sketchbook.
 

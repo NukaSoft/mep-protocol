@@ -1,4 +1,4 @@
----
+﻿---
 number: 0009
 title: "Eating the Sin of Others Is Manhood"
 date: 2026-04-14
@@ -20,7 +20,7 @@ Pierre defined manhood in one sentence during the memoir session of 2026-04-14, 
 
 > *"but mostly have no clue the price we pay for eating the sin of others.  That is man hood.... At least as I saw in my life."*
 >
-> — Pierre Hulsebus, 2026-04-14
+> â€” Pierre Hulsebus, 2026-04-14
 
 **Preserve verbatim.**  The ellipses, the *"At least as I saw in my life"* humility clause, the lowercase *"man hood"* split across a space | all of it.  Pierre was not claiming universal doctrine.  He was testifying to what he had learned from his own fifty years of living it.  **The testimony is the whole point.**
 

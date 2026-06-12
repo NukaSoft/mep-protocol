@@ -1,10 +1,10 @@
-# Handoff Log
+﻿# Handoff Log
 
 Last updated at end of session. Read this first.
 
 ---
 
-## 2026-04-03 — My Machine
+## 2026-04-03 â€” My Machine
 
 ### What happened
 - Initialized MEP Protocol in this repo

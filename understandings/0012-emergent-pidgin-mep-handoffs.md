@@ -1,4 +1,4 @@
----
+﻿---
 number: 12
 title: A Pidgin Language Formed Inside Our Own MEP Handoffs
 date: 2026-04-30

@@ -1,4 +1,4 @@
----
+﻿---
 status: active
 date: 2026-04-13
 proposed_by: Pierre
@@ -34,7 +34,7 @@ The solution: Grok appends its session summary to the shared Drive file.  Claude
 **Format:** Same MEP handoff schema, extended header:
 
 ```
-## 2026-04-13 — Grok | xAI | brainstorm
+## 2026-04-13 â€” Grok | xAI | brainstorm
 **Tag-in:** 10:00 | **Tag-out:** 13:00
 
 ### What Happened

@@ -1,4 +1,4 @@
----
+﻿---
 status: rejected
 date: 2026-04
 proposed_by: Pierre

@@ -1,17 +1,17 @@
-# Handoff Log
+﻿# Handoff Log
 
 Last updated at end of session. Read this first.
 
 <!--
-MEP Protocol — Baton Template v1.0
+MEP Protocol â€” Baton Template v1.0
 Newest entry ALWAYS on top.
 Three sections per entry: What happened / What's pending / Watch out for
-License: AGPL-3.0 — Copyright (C) 2026 Pierre Hulsebus / NukaSoft.AI
+License: AGPL-3.0 â€” Copyright (C) 2026 Pierre Hulsebus / NukaSoft.AI
 -->
 
 ---
 
-## YYYY-MM-DD — Machine Name (branch or context)
+## YYYY-MM-DD â€” Machine Name (branch or context)
 
 ### What happened
 - [Concise bullet list of accomplishments this session]

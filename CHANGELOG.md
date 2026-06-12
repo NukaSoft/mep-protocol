@@ -1,12 +1,12 @@
-# MEP Protocol — Changelog
+﻿# MEP Protocol â€” Changelog
 
 All notable changes to the MEP Protocol are documented here.
 
-Format: `## [version] — YYYY-MM-DD`
+Format: `## [version] â€” YYYY-MM-DD`
 
 ---
 
-## [MEEP-ReadOnly-v1] — 2026-04-29
+## [MEEP-ReadOnly-v1] â€” 2026-04-29
 
 **Read-only peer-agent context surface.**
 
@@ -25,7 +25,7 @@ Format: `## [version] — YYYY-MM-DD`
 
 ---
 
-## [2.2] — 2026-04-15
+## [2.2] â€” 2026-04-15
 
 **Public Relay Automation + Exploration Archive**
 
