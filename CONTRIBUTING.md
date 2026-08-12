@@ -1,6 +1,6 @@
 # Contributing to MEP Protocol
 
-MEP is a protocol specification, not a software library. Contributions are proposals to change how the protocol works â€” they carry more weight than a typical code PR.
+MEP is a protocol specification, not a software library. Contributions are proposals to change how the protocol works — they carry more weight than a typical code PR.
 
 ---
 
@@ -16,7 +16,7 @@ MEP is a protocol specification, not a software library. Contributions are propo
 
 ---
 
-## Protocol Changes â€” RFC Process
+## Protocol Changes — RFC Process
 
 MEP is a versioned protocol. Changes to core behavior (handoff schema, ordering rules, EOL sequence, conflict recovery) require an RFC:
 
@@ -40,4 +40,4 @@ You may build on MEP, ship it, and sell it, with no obligation to open your chan
 
 ## Code of Conduct
 
-Be direct. Be accurate. If something doesn't work, say so with evidence. If you disagree, say why. We are building infrastructure for AI agents â€” correctness matters more than politeness.
+Be direct. Be accurate. If something doesn't work, say so with evidence. If you disagree, say why. We are building infrastructure for AI agents — correctness matters more than politeness.
