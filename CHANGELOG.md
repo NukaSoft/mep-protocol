@@ -1,8 +1,8 @@
-# MEP Protocol — Changelog
+# MEP Protocol â€” Changelog
 
 All notable changes to the MEP Protocol are documented here.
 
-Format: `## [version] — YYYY-MM-DD`
+Format: `## [version] â€” YYYY-MM-DD`
 
 ---
 
@@ -29,7 +29,7 @@ required only when copying or adapting the documents themselves.
 Sole copyright holder, so no contributor consent was required. Verified against
 both the private history and the public repository before relicensing.
 
-## [MEEP-ReadOnly-v1] — 2026-04-29
+## [MEEP-ReadOnly-v1] â€” 2026-04-29
 
 **Read-only peer-agent context surface.**
 
@@ -48,7 +48,7 @@ both the private history and the public repository before relicensing.
 
 ---
 
-## [2.2] — 2026-04-15
+## [2.2] â€” 2026-04-15
 
 **Public Relay Automation + Exploration Archive**
 
@@ -70,21 +70,21 @@ both the private history and the public repository before relicensing.
 
 ---
 
-## [2.1] — 2026-04-13
+## [2.1] â€” 2026-04-13
 
 **Outbound Baton + Unified Handoff Schema**
 
 ### Added
-- **Component 9: Outbound Baton** — Shared handoff file on Google Drive.  All agents (Claude, Grok, ChatGPT, Gemini) read AND append to the same file.  Same handoff schema as v1 — not a new format.
-- **Multi-agent tag-in/tag-out** in handoff schema — extended header: `## DATE — Agent | Platform | session-type` + `**Tag-in:** TIME | **Tag-out:** TIME`.  Backward-compatible with v1 headers.
-- **Shared surface protocol** — any agent reads on start, appends on end.  One file, many agents, same rules.
+- **Component 9: Outbound Baton** â€” Shared handoff file on Google Drive.  All agents (Claude, Grok, ChatGPT, Gemini) read AND append to the same file.  Same handoff schema as v1 â€” not a new format.
+- **Multi-agent tag-in/tag-out** in handoff schema â€” extended header: `## DATE â€” Agent | Platform | session-type` + `**Tag-in:** TIME | **Tag-out:** TIME`.  Backward-compatible with v1 headers.
+- **Shared surface protocol** â€” any agent reads on start, appends on end.  One file, many agents, same rules.
 - Static context header (who Pierre is, active projects, crew, voice rules) + rolling handoff entries.
 - Platform-specific setup for Grok (upload), ChatGPT (project knowledge file), Gemini (native Drive read).
-- Complete loop diagram: publish → read → contribute → ingest → update → publish.
+- Complete loop diagram: publish â†’ read â†’ contribute â†’ ingest â†’ update â†’ publish.
 
 ### Standing Standup Reframing
-- **The shared handoff surface is a "Standing Standup"** — a persistent standup meeting with history and pointers that agents walk into, read, work, and append to.
-- **Project-scoped, not universe-scoped.**  Each project gets its own standup.  Eliminates the "Unimind" problem — no master document trying to contain everything.
+- **The shared handoff surface is a "Standing Standup"** â€” a persistent standup meeting with history and pointers that agents walk into, read, work, and append to.
+- **Project-scoped, not universe-scoped.**  Each project gets its own standup.  Eliminates the "Unimind" problem â€” no master document trying to contain everything.
 - Standup contains: project scope, artifacts inventory, pointers (public URLs), party line (active agents), and a standup log (tag-in/tag-out entries).
 - Not a briefing doc.  It is a live meeting that never ends.
 
@@ -97,17 +97,17 @@ both the private history and the public repository before relicensing.
 
 ---
 
-## [2.0] — 2026-04-13
+## [2.0] â€” 2026-04-13
 
 **Project-Centric Cross-Ecosystem Routing**
 
 ### Added
-- **MEP v2 design spec** — all cross-ecosystem work converges on Claude projects/skills as the canonical home.  Grok, ChatGPT, Gemini are spokes; Claude is the hub; the repo is the durable layer.
-- **Peer projects model** — each skill/project can declare linked sessions on other platforms.  When a peer session produces insights, they route into the skill and enrich it permanently.
-- **Project context accumulation** — cross-ecosystem conversations don't just transfer context once; they grow the project.  Every Grok brainstorm, every ChatGPT research session makes the skill smarter for every future session.
-- **Routing rules** — 5-step ingestion: identify project → archive conversation → extract insights → route to project → surface in handoff.
-- **3-phase implementation plan** — manual archive (now) → auto-routing (next) → bi-directional sync (future).
-- **Commercial angle** — MEP v2 as convergence layer for knowledge workers using multiple AI tools.
+- **MEP v2 design spec** â€” all cross-ecosystem work converges on Claude projects/skills as the canonical home.  Grok, ChatGPT, Gemini are spokes; Claude is the hub; the repo is the durable layer.
+- **Peer projects model** â€” each skill/project can declare linked sessions on other platforms.  When a peer session produces insights, they route into the skill and enrich it permanently.
+- **Project context accumulation** â€” cross-ecosystem conversations don't just transfer context once; they grow the project.  Every Grok brainstorm, every ChatGPT research session makes the skill smarter for every future session.
+- **Routing rules** â€” 5-step ingestion: identify project â†’ archive conversation â†’ extract insights â†’ route to project â†’ surface in handoff.
+- **3-phase implementation plan** â€” manual archive (now) â†’ auto-routing (next) â†’ bi-directional sync (future).
+- **Commercial angle** â€” MEP v2 as convergence layer for knowledge workers using multiple AI tools.
 
 ### Design Decisions
 - Claude is the hub, not because of vendor loyalty, but because it has code execution + repo access + durable memory.  The hub must be the LLM that can ACT on insights, not just discuss them.
@@ -116,28 +116,28 @@ both the private history and the public repository before relicensing.
 
 ---
 
-## [1.1] — 2026-04-13
+## [1.1] â€” 2026-04-13
 
 **Cross-Ecosystem Context Transfer + Seed Prompt**
 
 ### Added
-- **Component 7: Cross-Ecosystem Context Transfer** — conversation URLs from Grok, ChatGPT, Gemini, or any LLM become the baton for cross-provider context relay.  Operator pastes URL, receiving agent reads full conversation, continues without re-explanation.  Best-of-breed AI routing without context tax.
-- **Component 8: Seed Prompt** — self-contained text block for bootstrapping disconnected sessions (Cowork mode, Claude Desktop, any session without repo access).  One paste, zero questions.  "DO NOT ASK ME ANY QUESTIONS" is a valid protocol instruction.
-- Combined flow diagram: Grok (brainstorm) → Claude Mac (cowork) → Claude Hot Rod (code) → Claude Mac (next day).  Context follows the operator across LLMs AND machines.
+- **Component 7: Cross-Ecosystem Context Transfer** â€” conversation URLs from Grok, ChatGPT, Gemini, or any LLM become the baton for cross-provider context relay.  Operator pastes URL, receiving agent reads full conversation, continues without re-explanation.  Best-of-breed AI routing without context tax.
+- **Component 8: Seed Prompt** â€” self-contained text block for bootstrapping disconnected sessions (Cowork mode, Claude Desktop, any session without repo access).  One paste, zero questions.  "DO NOT ASK ME ANY QUESTIONS" is a valid protocol instruction.
+- Combined flow diagram: Grok (brainstorm) â†’ Claude Mac (cowork) â†’ Claude Hot Rod (code) â†’ Claude Mac (next day).  Context follows the operator across LLMs AND machines.
 
 ### Design Decisions
-- Conversation URL is transport-agnostic — works regardless of source platform
+- Conversation URL is transport-agnostic â€” works regardless of source platform
 - Seed prompts are read-and-execute, not read-and-plan
 - Cross-ecosystem transfer is ephemeral (platform-hosted); recommend archiving fetched conversations to `memory/conversations/` for permanence
 - "Low meat puppet friction" adopted as design standard for all context handoff patterns
 
 ### Production Milestones
-- **Grok → Claude architecture transfer** (Apr 13): 3-hour Grok session on GBrain/GStack patterns transferred to Claude via URL.  Claude produced 172-line journal, Captain's Log PDF, and forward objectives.  Zero re-explanation.
+- **Grok â†’ Claude architecture transfer** (Apr 13): 3-hour Grok session on GBrain/GStack patterns transferred to Claude via URL.  Claude produced 172-line journal, Captain's Log PDF, and forward objectives.  Zero re-explanation.
 - **Skool cowork seed prompt** (Apr 13): New Claude Desktop session bootstrapped with paste-and-go seed prompt.  No clarifying questions.  Immediate productive work.
 
 ---
 
-## [1.0.1] — 2026-04-03
+## [1.0.1] â€” 2026-04-03
 
 **Milestone: First Autonomous CI Recovery**
 
@@ -159,7 +159,7 @@ both the private history and the public repository before relicensing.
 - `MEP_RELAY.md` skill for Claude Code
 - PR opened to `anthropics/claude-code` examples
 
-## [1.0] — 2026-03-22
+## [1.0] â€” 2026-03-22
 
 **Initial release.**
 
@@ -167,17 +167,17 @@ both the private history and the public repository before relicensing.
 - Session protocol: identity file (`CLAUDE.md`) with mandatory start/end sequences
 - Handoff file schema: three-section structure (what happened / pending / watch out for), newest-first ordering
 - EOL trigger keywords: `/eol`, `p-out`, `ppp`, and natural language phrases
-- Git as reference transport layer — encryption at rest, 2FA, conflict resolution built in
+- Git as reference transport layer â€” encryption at rest, 2FA, conflict resolution built in
 - Self-enforcement mechanism: agent reads own protocol from identity file
 
 ### Design Decisions
 - Markdown chosen as reference baton format: diffable, autonomously mergeable, no tooling required
 - Format-agnostic by design: any structured human-readable text is a valid baton
-- No new infrastructure: Git, markdown, SSH — all pre-existing in any dev workflow
+- No new infrastructure: Git, markdown, SSH â€” all pre-existing in any dev workflow
 
 ### Validated Transports
-- Git (GitHub/GitLab): conformant ✅
-- SMB/UMB file shares: rejected — non-deterministic file locking ❌
-- iCloud, OneDrive, Google Docs: rejected — no structured diff support ❌
+- Git (GitHub/GitLab): conformant âœ…
+- SMB/UMB file shares: rejected â€” non-deterministic file locking âŒ
+- iCloud, OneDrive, Google Docs: rejected â€” no structured diff support âŒ
 
 ---

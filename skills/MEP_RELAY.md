@@ -1,6 +1,6 @@
 ---
 name: mep-relay
-description: MEP Protocol — pass the baton between AI sessions. Handles session start (load context), session end (commit state), and status check.
+description: MEP Protocol â€” pass the baton between AI sessions. Handles session start (load context), session end (commit state), and status check.
 user-invokable: true
 argument-hint: "[start|end|status]"
 license: Apache-2.0
@@ -18,14 +18,14 @@ Implements the Meat Puppet Elimination Protocol (MEP) handoff commands for Claud
 Execute at the beginning of any session.
 
 1. Run `git pull` to fetch the latest baton
-2. Read `handoff.md` — load the baton (newest entry is current state)
-3. Read `TASKS.md` — pick up the task queue
+2. Read `handoff.md` â€” load the baton (newest entry is current state)
+3. Read `TASKS.md` â€” pick up the task queue
 4. Check today's journal: `daily/YYYY-MM-DD.md`
-5. Report to the human: what's loaded, what's pending (2–3 lines max, not a novel)
+5. Report to the human: what's loaded, what's pending (2â€“3 lines max, not a novel)
 
 **Output format:**
 ```
-Picked up from [date] — [machine].
+Picked up from [date] â€” [machine].
 Pending: [top 2-3 items].
 Today's journal: [exists / not started].
 ```
@@ -36,13 +36,13 @@ Today's journal: [exists / not started].
 
 Execute at the end of any session. Triggered by EOL keywords: `/eol`, `p-out`, `ppp`, or natural phrases ("done", "wrap up", "heading out", "switching machines").
 
-1. Write the handoff entry — newest entry on top, three sections:
-   - `### What happened` — concise bullet list of accomplishments
-   - `### What's pending` — checkbox list of open items, scope-tagged by owner
-   - `### Watch out for` — optional, only if there are traps or stale state to flag
-2. Append to today's journal (`daily/YYYY-MM-DD.md`) — do not overwrite
+1. Write the handoff entry â€” newest entry on top, three sections:
+   - `### What happened` â€” concise bullet list of accomplishments
+   - `### What's pending` â€” checkbox list of open items, scope-tagged by owner
+   - `### Watch out for` â€” optional, only if there are traps or stale state to flag
+2. Append to today's journal (`daily/YYYY-MM-DD.md`) â€” do not overwrite
 3. Stage: `git add handoff.md daily/YYYY-MM-DD.md`
-4. Commit: `git commit -m "EOL: [machine] — [one-line summary] — Stardate [YYYY.DDD]"`
+4. Commit: `git commit -m "EOL: [machine] â€” [one-line summary] â€” Stardate [YYYY.DDD]"`
 5. Push: `git push`
 6. Confirm: **"End of Line."**
 
@@ -65,7 +65,7 @@ If push fails due to a merge conflict in `handoff.md`:
 
 ## /mep status
 
-Read the current `handoff.md` and summarize the last entry in 3–4 lines.
+Read the current `handoff.md` and summarize the last entry in 3â€“4 lines.
 
 ```
 Last session: [date] on [machine]
@@ -81,7 +81,7 @@ Watch out: [if any]
 ```markdown
 # Handoff Log
 
-## YYYY-MM-DD — Machine Name (branch/context)   ← newest entry ALWAYS on top
+## YYYY-MM-DD â€” Machine Name (branch/context)   â† newest entry ALWAYS on top
 
 ### What happened
 - Bullet list of accomplishments
@@ -95,7 +95,7 @@ Watch out: [if any]
 
 ---
 
-## YYYY-MM-DD — Previous Machine                ← older entries below
+## YYYY-MM-DD â€” Previous Machine                â† older entries below
 ...
 ```
 
