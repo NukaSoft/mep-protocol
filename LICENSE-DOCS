@@ -1,0 +1,19 @@
+﻿MEP | Meat Puppet Elimination Protocol | Specification Documents
+Copyright 2026 Pierre Hulsebus / NukaSoft.AI <pierre@nukasoft.ai>
+
+The specification documents in spec/, together with LEXICON.md, are licensed
+under the Creative Commons Attribution 4.0 International License (CC BY 4.0).
+
+You are free to share and adapt these documents for any purpose, including
+commercially, provided you give appropriate credit, link to the license, and
+indicate if changes were made.
+
+  Summary:   https://creativecommons.org/licenses/by/4.0/
+  Full text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Implementing the protocol described in these documents requires no permission
+and imposes no license obligation.  A specification is only useful if anyone
+can implement it.
+
+Code, templates, skills, and examples are licensed separately under the
+Apache License, Version 2.0.  See LICENSE.

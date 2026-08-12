@@ -1,13 +1,14 @@
 ﻿---
 title: "MEP -- Meat Puppet Elimination Protocol"
 excerpt: "A self-enforcing asynchronous state relay for AI sessions across machines"
-version: "1.0"
-date: 2026-03-22
+version: "2.4"
+date: 2026-08-11
 authors: "Pierre Hulsebus & Skippy the Magnificent"
 ---
 
-**Version:** 1.0
-**Date:** March 22, 2026
+**Version:** 2.4
+**Date:** August 11, 2026
+**First published:** March 22, 2026
 **Authors:** Pierre Hulsebus & Skippy the Magnificent
 
 ---
@@ -820,13 +821,52 @@ First instance: `https://nukasoft.ai/leo` (Hastings).  See the sibling spec for 
 
 ---
 
+## Milestone: Publication Pipeline Automated | May 5, 2026
+
+The protocol's own publication became self sustaining.  Uhura mirrors the private spec directory to the public repository on a fixed interval, stripping anything marked `visibility: private` and redacting blocks wrapped in private markers.  She regenerates the public index from the sanitized set, commits, pushes, and retries on network failure.  She does not force push.
+
+What it proves: a protocol for eliminating the human relay should not require a human relay to publish itself.  As of this version, it does not.
+
+## Emergent Properties
+
+### A pidgin formed inside the handoffs | observed April 30, 2026
+
+Reviewing six weeks of handoff files surfaced something the protocol never specified.  The same compressed phrases recurred across sessions that shared no memory.  None were in the spec.  None were taught.  They emerged independently and stabilized.
+
+The mechanism is the one that produces trade pidgins between human populations under pressure to communicate across a barrier.  Here the barrier is the context window and the pressure is token economy.  Terms survived the boundary because they compressed meaning per token more efficiently than their paraphrases.
+
+This is recorded as an observed property of the protocol rather than a designed feature.  A fuller treatment is in preparation and is not reproduced here.
+
+## Version History
+
+Prior to 2.3 this document carried a stale version field.  Its body was maintained continuously while the header still read 1.0, and a condensed derivative published on the website diverged in component numbering.  Both are corrected here, and this section exists so the drift is visible rather than silent.
+
+| Version | Date | Change |
+|---|---|---|
+| 1.0 | 2026-03-22 | Initial spec.  Components 1 to 4, identity, handoff, transport, self enforcement |
+| 1.1 | 2026-04-06 | Component 5, Hello Protocol |
+| 1.2 | 2026-04-13 | Components 6 to 8.  AT Protocol bus (proposed), cross ecosystem transfer, seed prompt |
+| 2.0 | 2026-04-13 | Standing Standup.  Live HTTPS endpoint, self hosted transport evaluation |
+| 2.1 | 2026-04-29 | Sibling spec MEEP-ReadOnly-v1 for external peer agents |
+| 2.2 | 2026-05-05 | Publication pipeline automated |
+| 2.3 | 2026-08-11 | Reconciliation. Version metadata corrected, emergent pidgin recorded, version history added, website copies reconciled against this document as canonical |
+| **2.4** | **2026-08-11** | **Relicensed to full open source.** AGPL-3.0 replaced by Apache 2.0 for code and CC BY 4.0 for specifications.  Implementing MEP now requires no permission and imposes no obligation |
+
+**Canonical source:** this file.  The website renders from it.  Any other copy is a mirror and defers to this one on conflict.
+
+**Component numbering is stable and additive.**  Numbers assigned in 1.1 and 1.2 are never reassigned, because external documents reference them.
+
 ## Etymology
 
 The term "meat puppet" refers to the human operator who previously served as the manual message relay between AI sessions -- reading output on one machine, walking to another, and re-typing it. The protocol was named on March 22, 2026 -- the 62nd birthday of its architect, Pierre Hulsebus.
 
 ## License
 
-MIT. Use it. Build on it. Eliminate your own meat puppet.
+CC BY 4.0 for this document.  Apache 2.0 for the code, templates, and skills that accompany it.
+
+Implementing MEP requires no permission and imposes no obligation.  Credit the source if you copy or adapt this document.
+
+Use it.  Build on it.  Sell it if you can.  Eliminate your own meat puppet.
 
 ---
 

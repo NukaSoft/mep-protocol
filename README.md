@@ -2,7 +2,7 @@
 
 **Meat Puppet Elimination Protocol** â€” a self-enforcing asynchronous state relay for AI sessions across machines.
 
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![Code: Apache 2.0](https://img.shields.io/badge/Code-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0) [![Docs: CC BY 4.0](https://img.shields.io/badge/Docs-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![MEP Version](https://img.shields.io/badge/MEP-v1.0-green.svg)](spec/mep-protocol.md)
 [![Status: Production](https://img.shields.io/badge/Status-Production%20Proven-brightgreen.svg)](spec/mep-protocol.md#milestone-first-autonomous-ci-recovery)
 
@@ -100,7 +100,8 @@ New to the terminology? The **[MEP Lexicon](LEXICON.md)** defines every term â�
 
 ```
 mep-protocol/
-â”œâ”€â”€ LICENSE                    AGPL-3.0
+â”œâ”€â”€ LICENSE                    Apache-2.0 (code, templates, skills)
+â”œâ”€â”€ LICENSE-DOCS               CC BY 4.0 (spec/, LEXICON.md)
 â”œâ”€â”€ README.md                  This file
 â”œâ”€â”€ LEXICON.md                 Protocol terminology and lineage
 â”œâ”€â”€ NUKA-LOG.md                Human authorship audit trail
@@ -132,7 +133,14 @@ The key requirement is **structure**. Unstructured text cannot be autonomously m
 
 ## License
 
-AGPL-3.0-or-later. Copyright (C) 2026 Pierre Hulsebus / NukaSoft.AI.
+Open source, two licenses by artifact type.
+
+- **Code, templates, skills, examples:** Apache License 2.0.  See `LICENSE`.
+- **Specification documents (`spec/`, `LEXICON.md`):** CC BY 4.0.  See `LICENSE-DOCS`.
+
+Copyright 2026 Pierre Hulsebus / NukaSoft.AI.
+
+Implementing MEP requires no permission and imposes no obligation.  Attribution is required when you copy or adapt the documents themselves.  A protocol is only worth writing if people can build on it.
 
 Use it. Build on it. If you distribute a modified version â€” especially as a network service â€” your modifications must remain open.
 

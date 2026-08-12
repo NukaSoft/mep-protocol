@@ -32,9 +32,9 @@ MEP is a versioned protocol. Changes to core behavior (handoff schema, ordering 
 
 ## Authorship & IP
 
-MEP is AGPL-3.0. By contributing, you agree your contribution is licensed under AGPL-3.0.
+MEP is open source under two licenses: Apache 2.0 for code, templates, skills, and examples; CC BY 4.0 for the specification documents. By contributing, you agree your contribution is licensed under whichever of the two applies to the file you touched.
 
-If you build on MEP and distribute it â€” including as a network service â€” your modifications must remain open under AGPL-3.0.
+You may build on MEP, ship it, and sell it, with no obligation to open your changes. Implementing the protocol requires no permission at all. If you copy or adapt the spec documents themselves, credit the source.
 
 ---
 

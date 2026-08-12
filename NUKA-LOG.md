@@ -3,7 +3,7 @@
 **Status:** ACTIVE
 **Authorship Lead:** Pierre Hulsebus
 **Core Objective:** Establish local-first, zero-infrastructure state relay for AI agents across machines.
-**License:** AGPL-3.0-or-later
+**License:** Apache-2.0 | Copyright 2026 Pierre Hulsebus / NukaSoft.AI
 
 > This file is the Paper Trail of Sovereignty. By maintaining it, Pierre documents that he is the Architect and Claude is the Builder. In the 2026 legal landscape, this is the difference between owning your IP and having it declared public domain due to lack of human authorship.
 
@@ -26,4 +26,4 @@ Pierre also directed that a new AP be created to own this pipeline | naming her 
 - Pierre directed Option A: auto-commit + push directly to the public repo on each sync.  No PR gate.  The public repo is a downstream mirror, not a collaborative review surface.
 - Pierre set the cadence: every 3 hours.  Persistent across reboot.
 
-<!-- sync:2026-08-11T18:10:05-04:00 | Uhura | 13 understandings published -->
+<!-- sync:2026-08-11T21:10:05-04:00 | Uhura | 13 understandings published -->

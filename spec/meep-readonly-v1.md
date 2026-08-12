@@ -2,7 +2,7 @@
 
 **Version:** 1.0
 **Date:** 2026-04-29
-**License:** AGPL-3.0-or-later â€” Copyright (C) 2026 Pierre Hulsebus / NukaSoft.AI
+**License:** CC BY 4.0 | Copyright 2026 Pierre Hulsebus / NukaSoft.AI
 
 ---
 
@@ -183,7 +183,7 @@ A conformant MEEP-ReadOnly-v1 page satisfies all of:
 
 ## License
 
-AGPL-3.0-or-later. Copyright (C) 2026 Pierre Hulsebus / NukaSoft.AI.
+CC BY 4.0. Copyright 2026 Pierre Hulsebus / NukaSoft.AI. Implementing this spec requires no permission.
 
 ---
 

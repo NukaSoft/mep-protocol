@@ -4,7 +4,7 @@
 MEP Protocol Template â€” Meat Puppet Elimination Protocol v1.0
 Drop this into your repo root as CLAUDE.md.
 Replace bracketed placeholders with your project details.
-License: AGPL-3.0 â€” Copyright (C) 2026 Pierre Hulsebus / NukaSoft.AI
+License: Apache-2.0 | Copyright 2026 Pierre Hulsebus / NukaSoft.AI
 -->
 
 ## âš¡ Session Protocol (MANDATORY)

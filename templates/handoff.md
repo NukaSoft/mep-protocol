@@ -6,7 +6,7 @@ Last updated at end of session. Read this first.
 MEP Protocol â€” Baton Template v1.0
 Newest entry ALWAYS on top.
 Three sections per entry: What happened / What's pending / Watch out for
-License: AGPL-3.0 â€” Copyright (C) 2026 Pierre Hulsebus / NukaSoft.AI
+License: Apache-2.0 | Copyright 2026 Pierre Hulsebus / NukaSoft.AI
 -->
 
 ---

@@ -50,7 +50,7 @@ Based in Hudsonville/Grandville, Michigan
 | Resource | URL | What It Is |
 |----------|-----|-----------|
 | **NukaSoft.AI** | [nukasoft.ai](https://nukasoft.ai) | The vision.  The crew.  Published skills, Captain's Log blog, brand identity.  Start here to understand what we're building. |
-| **MEP Protocol** | [github.com/NukaSoft/mep-protocol](https://github.com/NukaSoft/mep-protocol) | The protocol you're participating in right now.  Full spec, lexicon, templates, changelog.  Public repo (AGPL-3.0). |
+| **MEP Protocol** | [github.com/NukaSoft/mep-protocol](https://github.com/NukaSoft/mep-protocol) | The protocol you're participating in right now.  Full spec, lexicon, templates, changelog.  Public repo.  Apache 2.0 for code, CC BY 4.0 for the specs. |
 | **NukaSoft Public Repo** | [github.com/NukaSoft/nukasoft.ai](https://github.com/NukaSoft/nukasoft.ai) | Jekyll site source â€” skills, blog posts, crew pages.  Public.  Read this for brand voice and published content. |
 | **skippy-brain** | github.com/NukaSoft/skippy-brain | PRIVATE working repo.  Where Claude (Skippy) lives.  All skills, memory, engine, daily journals.  You can't access this directly â€” Claude syncs relevant context into this handoff file. |
 

@@ -3,7 +3,7 @@
 **Status:** ACTIVE
 **Authorship Lead:** [Your Name]
 **Core Objective:** [One sentence: what you directed the AI to build and why]
-**License:** AGPL-3.0-or-later
+**License:** Apache-2.0 | Copyright 2026 Pierre Hulsebus / NukaSoft.AI
 
 > This file is your Paper Trail of Sovereignty. By maintaining it, you document that you are the Architect and the AI is the Builder. This is the difference between owning your IP and having it declared public domain due to lack of human authorship.
 

@@ -3,7 +3,7 @@ name: mep-relay
 description: MEP Protocol â€” pass the baton between AI sessions. Handles session start (load context), session end (commit state), and status check.
 user-invokable: true
 argument-hint: "[start|end|status]"
-license: AGPL-3.0-or-later
+license: Apache-2.0
 copyright: Copyright (C) 2026 Pierre Hulsebus / NukaSoft.AI
 ---
 
