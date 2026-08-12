@@ -38,10 +38,10 @@ You don't need a GPU rack. You don't need a data center. You need *one* box capa
 Because this is the kind of decision I will want to repeat | and explain to others | for the rest of the build. **Capacity moved local. Economics followed. Routing is the design pattern.**
 
 Every future "should we add a model for X?" question gets answered against this template:
-1. Is the work creative or judgment-heavy? → Cloud Opus.
-2. Is the work recurring, classification-shaped, or extraction-shaped? → Local Gemma.
-3. Is the volume high enough that token cost dominates? → Always local.
-4. Is the work novel and exploratory (still figuring it out)? → Cloud, then move local once stable.
+1. Is the work creative or judgment-heavy? â†’ Cloud Opus.
+2. Is the work recurring, classification-shaped, or extraction-shaped? â†’ Local Gemma.
+3. Is the volume high enough that token cost dominates? â†’ Always local.
+4. Is the work novel and exploratory (still figuring it out)? â†’ Cloud, then move local once stable.
 
 That's the playbook. The $1,500 box paid for itself in a quarter, the cloud still does what only the cloud can do, and the system as a whole gets cheaper *and* more capable at the same time.
 

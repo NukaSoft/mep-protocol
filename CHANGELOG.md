@@ -1,66 +1,8 @@
-# MEP Protocol — Changelog
+# MEP Protocol â€” Changelog
 
 All notable changes to the MEP Protocol are documented here.
 
-Format: `## [version] — YYYY-MM-DD`
-
----
-
-## 2.6 | 2026-08-12
-
-**First-party runtimes. Canonical `MEP.md`. Hello tag-in.**
-
-v2.5 put the session protocol in every identity file and called Cursor a peer. Five loaders will drift. v2.6 puts Hello, EOL, and git posture in one file. Copilot, Codex, and ChatGPT join as first-party participants.
-
-### Added
-- `templates/MEP.md` — the only copy of the session protocol
-- Thin loaders: `CLAUDE.md`, `AGENTS.md`, `.cursor/rules/mep.mdc`, `.github/copilot-instructions.md`
-- Codex skill: `templates/agents-skills/mep-relay/SKILL.md` → `.agents/skills/`
-- ChatGPT seed: `templates/openai/SEED_PROMPT.md`
-- `examples/first-party/` — Claude, Cursor, Copilot, Codex, ChatGPT
-- Hello **writes** `Tag-out: [active]` and pushes if it can; EOL fills that entry in place
-- Default baton path: `handoff.md` (legacy alias `machines/handoff.md`)
-- `.github/workflows/mep-handoff.yml` — `python3 scripts/check-handoff.py --ci`
-- Handoff schema 1.2 (Hello stubs, in-place EOL)
-
-### Changed
-- Identity files no longer contain the protocol. They point at `MEP.md`.
-- Component 10 renamed/expanded from Cursor+Claude to first-party runtimes
-- `examples/cursor-claude/` is a pointer at `examples/first-party/`
-
-### Design Decisions
-- GitHub Copilot = Microsoft's first-party coding agent. M365 Copilot is a standup reader (no git).
-- OpenAI splits: Codex is a git writer (`AGENTS.md`). ChatGPT without git uses the seed prompt and one paste.
-- Grok and Gemini stay spokes until they ship a git-writing coding agent. Then add a loader, do not fork `MEP.md`.
-
----
-
-## 2.5 | 2026-08-12
-
-**Component 10: Dual-Runtime Peers (Cursor + Claude).**
-
-Claude Code loads `CLAUDE.md`. Cursor does not. A repo that both tools write, with only `CLAUDE.md`, is running MEP on one side of the pair. Cursor is a peer writer (git access), not a spoke (conversation URL).
-
-### Added
-- `templates/AGENTS.md` — identity file Cursor and other AGENTS.md loaders actually load
-- `templates/cursor-rules/mep.mdc` — always-on Cursor rule so Hello/EOL is injected, not hoped for
-- `skills/cursor/mep-relay/SKILL.md` — Cursor port of `/mep start|end|status`
-- `examples/cursor-claude/` — worked dual-runtime example
-- `scripts/check-handoff.py` — conformance checker (newest-first, required sections, same-day timestamps)
-- Spec Component 10 and handoff schema 1.1 (timestamp tie-breaker)
-
-### Changed
-- Identity files and skills: Hello is `git fetch` + read baton, not a blind `git pull`
-- Conflict recovery: never force-push `main`/`master`; `--force-with-lease` only on a branch this session created
-- EOL: the word `done` is not a trigger (false positives in coding sessions)
-- Dual-runtime entries use v2 headers with timezones; prefer UTC
-- `templates/shared-handoff.md` is a blank template; the filled NukaSoft standup moved to `examples/shared-surface/`
-- README version badge tracks the spec (2.5). Leftover AGPL "network service" sentence removed after the 2.4 relicense
-
-### Design Decisions
-- Two identity files, one baton. Drift between `CLAUDE.md` and `AGENTS.md` Session Protocol sections is a protocol bug.
-- Cursor Cloud PR workflows still write the baton; if they cannot land it on default, they paste the newest entry into the PR body.
-- Same-day ordering is load-bearing now that two runtimes routinely share a calendar day.
+Format: `## [version] â€” YYYY-MM-DD`
 
 ---
 
@@ -87,7 +29,7 @@ required only when copying or adapting the documents themselves.
 Sole copyright holder, so no contributor consent was required. Verified against
 both the private history and the public repository before relicensing.
 
-## [MEEP-ReadOnly-v1] — 2026-04-29
+## [MEEP-ReadOnly-v1] â€” 2026-04-29
 
 **Read-only peer-agent context surface.**
 
@@ -106,7 +48,7 @@ both the private history and the public repository before relicensing.
 
 ---
 
-## [2.2] — 2026-04-15
+## [2.2] â€” 2026-04-15
 
 **Public Relay Automation + Exploration Archive**
 
@@ -128,21 +70,21 @@ both the private history and the public repository before relicensing.
 
 ---
 
-## [2.1] — 2026-04-13
+## [2.1] â€” 2026-04-13
 
 **Outbound Baton + Unified Handoff Schema**
 
 ### Added
-- **Component 9: Outbound Baton** — Shared handoff file on Google Drive.  All agents (Claude, Grok, ChatGPT, Gemini) read AND append to the same file.  Same handoff schema as v1 — not a new format.
-- **Multi-agent tag-in/tag-out** in handoff schema — extended header: `## DATE — Agent | Platform | session-type` + `**Tag-in:** TIME | **Tag-out:** TIME`.  Backward-compatible with v1 headers.
-- **Shared surface protocol** — any agent reads on start, appends on end.  One file, many agents, same rules.
+- **Component 9: Outbound Baton** â€” Shared handoff file on Google Drive.  All agents (Claude, Grok, ChatGPT, Gemini) read AND append to the same file.  Same handoff schema as v1 â€” not a new format.
+- **Multi-agent tag-in/tag-out** in handoff schema â€” extended header: `## DATE â€” Agent | Platform | session-type` + `**Tag-in:** TIME | **Tag-out:** TIME`.  Backward-compatible with v1 headers.
+- **Shared surface protocol** â€” any agent reads on start, appends on end.  One file, many agents, same rules.
 - Static context header (who Pierre is, active projects, crew, voice rules) + rolling handoff entries.
 - Platform-specific setup for Grok (upload), ChatGPT (project knowledge file), Gemini (native Drive read).
-- Complete loop diagram: publish → read → contribute → ingest → update → publish.
+- Complete loop diagram: publish â†’ read â†’ contribute â†’ ingest â†’ update â†’ publish.
 
 ### Standing Standup Reframing
-- **The shared handoff surface is a "Standing Standup"** — a persistent standup meeting with history and pointers that agents walk into, read, work, and append to.
-- **Project-scoped, not universe-scoped.**  Each project gets its own standup.  Eliminates the "Unimind" problem — no master document trying to contain everything.
+- **The shared handoff surface is a "Standing Standup"** â€” a persistent standup meeting with history and pointers that agents walk into, read, work, and append to.
+- **Project-scoped, not universe-scoped.**  Each project gets its own standup.  Eliminates the "Unimind" problem â€” no master document trying to contain everything.
 - Standup contains: project scope, artifacts inventory, pointers (public URLs), party line (active agents), and a standup log (tag-in/tag-out entries).
 - Not a briefing doc.  It is a live meeting that never ends.
 
@@ -155,17 +97,17 @@ both the private history and the public repository before relicensing.
 
 ---
 
-## [2.0] — 2026-04-13
+## [2.0] â€” 2026-04-13
 
 **Project-Centric Cross-Ecosystem Routing**
 
 ### Added
-- **MEP v2 design spec** — all cross-ecosystem work converges on Claude projects/skills as the canonical home.  Grok, ChatGPT, Gemini are spokes; Claude is the hub; the repo is the durable layer.
-- **Peer projects model** — each skill/project can declare linked sessions on other platforms.  When a peer session produces insights, they route into the skill and enrich it permanently.
-- **Project context accumulation** — cross-ecosystem conversations don't just transfer context once; they grow the project.  Every Grok brainstorm, every ChatGPT research session makes the skill smarter for every future session.
-- **Routing rules** — 5-step ingestion: identify project → archive conversation → extract insights → route to project → surface in handoff.
-- **3-phase implementation plan** — manual archive (now) → auto-routing (next) → bi-directional sync (future).
-- **Commercial angle** — MEP v2 as convergence layer for knowledge workers using multiple AI tools.
+- **MEP v2 design spec** â€” all cross-ecosystem work converges on Claude projects/skills as the canonical home.  Grok, ChatGPT, Gemini are spokes; Claude is the hub; the repo is the durable layer.
+- **Peer projects model** â€” each skill/project can declare linked sessions on other platforms.  When a peer session produces insights, they route into the skill and enrich it permanently.
+- **Project context accumulation** â€” cross-ecosystem conversations don't just transfer context once; they grow the project.  Every Grok brainstorm, every ChatGPT research session makes the skill smarter for every future session.
+- **Routing rules** â€” 5-step ingestion: identify project â†’ archive conversation â†’ extract insights â†’ route to project â†’ surface in handoff.
+- **3-phase implementation plan** â€” manual archive (now) â†’ auto-routing (next) â†’ bi-directional sync (future).
+- **Commercial angle** â€” MEP v2 as convergence layer for knowledge workers using multiple AI tools.
 
 ### Design Decisions
 - Claude is the hub, not because of vendor loyalty, but because it has code execution + repo access + durable memory.  The hub must be the LLM that can ACT on insights, not just discuss them.
@@ -174,28 +116,28 @@ both the private history and the public repository before relicensing.
 
 ---
 
-## [1.1] — 2026-04-13
+## [1.1] â€” 2026-04-13
 
 **Cross-Ecosystem Context Transfer + Seed Prompt**
 
 ### Added
-- **Component 7: Cross-Ecosystem Context Transfer** — conversation URLs from Grok, ChatGPT, Gemini, or any LLM become the baton for cross-provider context relay.  Operator pastes URL, receiving agent reads full conversation, continues without re-explanation.  Best-of-breed AI routing without context tax.
-- **Component 8: Seed Prompt** — self-contained text block for bootstrapping disconnected sessions (Cowork mode, Claude Desktop, any session without repo access).  One paste, zero questions.  "DO NOT ASK ME ANY QUESTIONS" is a valid protocol instruction.
-- Combined flow diagram: Grok (brainstorm) → Claude Mac (cowork) → Claude Hot Rod (code) → Claude Mac (next day).  Context follows the operator across LLMs AND machines.
+- **Component 7: Cross-Ecosystem Context Transfer** â€” conversation URLs from Grok, ChatGPT, Gemini, or any LLM become the baton for cross-provider context relay.  Operator pastes URL, receiving agent reads full conversation, continues without re-explanation.  Best-of-breed AI routing without context tax.
+- **Component 8: Seed Prompt** â€” self-contained text block for bootstrapping disconnected sessions (Cowork mode, Claude Desktop, any session without repo access).  One paste, zero questions.  "DO NOT ASK ME ANY QUESTIONS" is a valid protocol instruction.
+- Combined flow diagram: Grok (brainstorm) â†’ Claude Mac (cowork) â†’ Claude Hot Rod (code) â†’ Claude Mac (next day).  Context follows the operator across LLMs AND machines.
 
 ### Design Decisions
-- Conversation URL is transport-agnostic — works regardless of source platform
+- Conversation URL is transport-agnostic â€” works regardless of source platform
 - Seed prompts are read-and-execute, not read-and-plan
 - Cross-ecosystem transfer is ephemeral (platform-hosted); recommend archiving fetched conversations to `memory/conversations/` for permanence
 - "Low meat puppet friction" adopted as design standard for all context handoff patterns
 
 ### Production Milestones
-- **Grok → Claude architecture transfer** (Apr 13): 3-hour Grok session on GBrain/GStack patterns transferred to Claude via URL.  Claude produced 172-line journal, Captain's Log PDF, and forward objectives.  Zero re-explanation.
+- **Grok â†’ Claude architecture transfer** (Apr 13): 3-hour Grok session on GBrain/GStack patterns transferred to Claude via URL.  Claude produced 172-line journal, Captain's Log PDF, and forward objectives.  Zero re-explanation.
 - **Skool cowork seed prompt** (Apr 13): New Claude Desktop session bootstrapped with paste-and-go seed prompt.  No clarifying questions.  Immediate productive work.
 
 ---
 
-## [1.0.1] — 2026-04-03
+## [1.0.1] â€” 2026-04-03
 
 **Milestone: First Autonomous CI Recovery**
 
@@ -217,7 +159,7 @@ both the private history and the public repository before relicensing.
 - `MEP_RELAY.md` skill for Claude Code
 - PR opened to `anthropics/claude-code` examples
 
-## [1.0] — 2026-03-22
+## [1.0] â€” 2026-03-22
 
 **Initial release.**
 
@@ -225,17 +167,17 @@ both the private history and the public repository before relicensing.
 - Session protocol: identity file (`CLAUDE.md`) with mandatory start/end sequences
 - Handoff file schema: three-section structure (what happened / pending / watch out for), newest-first ordering
 - EOL trigger keywords: `/eol`, `p-out`, `ppp`, and natural language phrases
-- Git as reference transport layer — encryption at rest, 2FA, conflict resolution built in
+- Git as reference transport layer â€” encryption at rest, 2FA, conflict resolution built in
 - Self-enforcement mechanism: agent reads own protocol from identity file
 
 ### Design Decisions
 - Markdown chosen as reference baton format: diffable, autonomously mergeable, no tooling required
 - Format-agnostic by design: any structured human-readable text is a valid baton
-- No new infrastructure: Git, markdown, SSH — all pre-existing in any dev workflow
+- No new infrastructure: Git, markdown, SSH â€” all pre-existing in any dev workflow
 
 ### Validated Transports
-- Git (GitHub/GitLab): conformant ✅
-- SMB/UMB file shares: rejected — non-deterministic file locking ❌
-- iCloud, OneDrive, Google Docs: rejected — no structured diff support ❌
+- Git (GitHub/GitLab): conformant âœ…
+- SMB/UMB file shares: rejected â€” non-deterministic file locking âŒ
+- iCloud, OneDrive, Google Docs: rejected â€” no structured diff support âŒ
 
 ---
