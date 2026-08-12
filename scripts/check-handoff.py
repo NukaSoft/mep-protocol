@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
-"""MEP handoff.md conformance checker (schema 1.1).
+"""MEP handoff.md conformance checker (schema 1.2).
 
-Validates newest-first ordering, required sections, and same-day timestamp
-order for v2 (multi-runtime) entries. Stdlib only.
+Validates newest-first ordering, required sections, same-day timestamp
+order, and Hello [active] stubs. Stdlib only.
+
+Default baton path is handoff.md at repo root. machines/handoff.md is a
+legacy alias used only when the default file is missing.
 
 Usage:
   python3 scripts/check-handoff.py path/to/handoff.md
   python3 scripts/check-handoff.py --self-test
+  python3 scripts/check-handoff.py --ci
 """
 
 from __future__ import annotations
@@ -21,8 +25,8 @@ HEADER_RE = re.compile(
     r"^##\s+(\d{4}-\d{2}-\d{2})\s+[—–-]\s+(.+)$"
 )
 TAG_RE = re.compile(
-    r"\*\*Tag-in:\*\*\s*(\S+(?:\s+\S+)?)\s*\|\s*\*\*Tag-out:\*\*\s*(\S+(?:\s+\S+)?)",
-    re.IGNORECASE,
+    r"\*\*Tag-in:\*\*\s*([^\n|]+?)\s*\|\s*\*\*Tag-out:\*\*\s*([^\n]+?)\s*$",
+    re.IGNORECASE | re.MULTILINE,
 )
 TIME_RE = re.compile(
     r"^(\d{1,2}):(\d{2})(?:\s*([A-Za-z]{2,4}))?$"
@@ -148,14 +152,54 @@ def check_text(text: str, source: str) -> list[Issue]:
                 Issue(
                     "warning",
                     f"{source}:{line_no}: same-day entries without comparable timestamps; "
-                    "dual-runtime repos should use v2 tag-in/tag-out with timezones",
+                    "first-party repos should use v2 tag-in/tag-out with timezones",
                 )
             )
     return issues
 
 
+def resolve_baton(path: Path) -> Path:
+    if path.is_dir():
+        default = path / "handoff.md"
+        legacy = path / "machines" / "handoff.md"
+        if default.exists():
+            return default
+        if legacy.exists():
+            return legacy
+        return default
+    return path
+
+
 def check_file(path: Path) -> list[Issue]:
-    return check_text(path.read_text(encoding="utf-8"), str(path))
+    baton = resolve_baton(path)
+    if not baton.exists():
+        return [Issue("error", f"{baton}: file not found")]
+    return check_text(baton.read_text(encoding="utf-8"), str(baton))
+
+
+def example_handoffs(root: Path) -> list[Path]:
+    found: list[Path] = []
+    examples = root / "examples"
+    if not examples.exists():
+        return found
+    for candidate in sorted(examples.rglob("handoff.md")):
+        found.append(candidate)
+    return found
+
+
+def run_ci() -> int:
+    root = Path(__file__).resolve().parents[1]
+    failed = self_test()
+    for handoff in example_handoffs(root):
+        issues = check_file(handoff)
+        errors = [i for i in issues if i.level == "error"]
+        status = "ok" if not errors else "FAIL"
+        print(f"{status:4} {handoff.relative_to(root)}: {len(errors)} error(s)")
+        if errors:
+            failed = 1
+            for issue in errors:
+                print(f"       {issue.level}: {issue.message}")
+    return failed
 
 
 def self_test() -> int:
@@ -163,6 +207,7 @@ def self_test() -> int:
     cases = [
         ("valid.md", 0, 0),
         ("valid-v2-sameday.md", 0, 0),
+        ("valid-active.md", 0, 0),
         ("invalid-order.md", 1, None),
         ("invalid-sameday.md", 1, None),
         ("invalid-missing-section.md", 1, None),
@@ -189,10 +234,17 @@ def self_test() -> int:
 
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("path", nargs="?", help="handoff.md to check")
+    parser.add_argument("path", nargs="?", help="handoff.md or a repo directory")
     parser.add_argument("--self-test", action="store_true")
+    parser.add_argument(
+        "--ci",
+        action="store_true",
+        help="run fixtures plus every examples/**/handoff.md",
+    )
     args = parser.parse_args(argv)
 
+    if args.ci:
+        return run_ci()
     if args.self_test:
         return self_test()
     if not args.path:

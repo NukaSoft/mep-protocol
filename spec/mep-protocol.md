@@ -1,12 +1,12 @@
 ---
 title: "MEP -- Meat Puppet Elimination Protocol"
 excerpt: "A self-enforcing asynchronous state relay for AI sessions across machines"
-version: "2.5"
+version: "2.6"
 date: 2026-08-12
 authors: "Pierre Hulsebus & Skippy the Magnificent"
 ---
 
-**Version:** 2.5
+**Version:** 2.6
 **Date:** August 12, 2026
 **First published:** March 22, 2026
 **Authors:** Pierre Hulsebus & Skippy the Magnificent
@@ -35,11 +35,19 @@ MEP consists of four components:
 
 ### 1. Identity File
 
-A markdown file at the repo root that the AI agent loads automatically at session start. The protocol instructions are embedded directly in this file. The agent reads its own instructions, which tell it to follow the protocol.
+A markdown file at the repo root that the AI agent loads automatically at session start. The protocol instructions are **not** duplicated in every loader. `MEP.md` is the canonical session protocol. Each runtime's identity file is a thin loader that says: read `MEP.md`, then Hello.
 
-The filename depends on the runtime. Claude Code loads `CLAUDE.md`. Cursor (and other AGENTS.md loaders) load `AGENTS.md`. A repo that both tools write needs both files, with identical Session Protocol sections, plus `.cursor/rules/mep.mdc` so Cursor actually injects the protocol. See [Component 10](#component-10-dual-runtime-peers-cursor--claude).
+| Runtime | Loader (auto-loaded) |
+|---------|----------------------|
+| Claude Code | `CLAUDE.md` |
+| Cursor | `AGENTS.md` + `.cursor/rules/mep.mdc` |
+| GitHub Copilot | `.github/copilot-instructions.md` + `AGENTS.md` |
+| OpenAI Codex | `AGENTS.md` |
+| ChatGPT (no git) | `templates/openai/SEED_PROMPT.md` (operator paste) |
 
-**This is the key innovation:** the protocol is self-enforcing. No external daemon, no server, no runtime. The agent enforces the protocol on itself by reading its own identity file. An identity file the runtime does not load is not self-enforcing.
+Project identity lives in `AGENTS.md` so Codex, Cursor, and Copilot coding agent share one description. See [Component 10](#component-10-first-party-runtimes).
+
+**This is the key innovation:** the protocol is self-enforcing. No external daemon, no server, no runtime. The agent enforces the protocol on itself by reading its own identity file, which points at `MEP.md`. An identity file the runtime does not load is not self-enforcing. Duplicating the protocol in every loader is a drift bug.
 
 ### 2. Handoff File
 
@@ -72,9 +80,9 @@ The human's only job: open a new session and start talking. The agent handles th
 ### Minimum Viable MEP
 
 1. Create a private GitHub repo
-2. Add the identity file the runtime actually loads (`CLAUDE.md` for Claude Code, `AGENTS.md` for Cursor, both for dual-runtime)
-3. Add a `handoff.md` file (or `machines/handoff.md` for multi-machine layouts — name the path in the identity file)
-4. Clone on both machines / both runtimes
+2. Copy `templates/MEP.md` (canonical protocol) and the loaders your runtimes actually read (`CLAUDE.md`, `AGENTS.md`, `.github/copilot-instructions.md`, `.cursor/rules/mep.mdc`)
+3. Add `handoff.md` at the repo root (legacy alias: `machines/handoff.md` only if the default is absent)
+4. Clone on every machine / every runtime
 5. That's it
 
 ### Optional Enhancements
@@ -162,26 +170,28 @@ EOL writes the baton down.  Hello picks it up.  They are the two ends of the sam
 ### What it does
 
 When an agent session starts on any machine:
-1. Pull latest from the transport layer (git)
-2. Sync all skills and reference files to the local environment
-3. Read the handoff file
-4. Surface key context (deadlines, reference file paths, pending work)
+1. Fetch latest from the transport layer (git)
+2. Read `MEP.md` and `handoff.md`
+3. **Tag in** — prepend a v2 entry with `Tag-out: [active]`, commit, push if possible
+4. Surface key context (pending work, other `[active]` sessions)
 5. Report ready status
+
+Hello without a published tag-in is invisible to peers. The tag-in is the party line.
 
 ### Implementation
 
-`scripts/hello.sh` | a single command that clones (first run) or pulls the repo, syncs submodules, re-symlinks skills to `~/.claude/skills/`, and lists key reference files with machine-local paths.
+Identity loaders (`CLAUDE.md`, `AGENTS.md`, Copilot instructions, Cursor rule) point at `MEP.md`. Optional: `scripts/hello.sh` for machine-local skill sync (NukaSoft private tree). The protocol-level Hello is the tag-in on `handoff.md`, not a shell alias.
 
-On Mac: `alias hello='cd ~/Dev/skippy-brain && bash scripts/hello.sh'`
+On Mac (optional local helper): `alias hello='cd ~/Dev/skippy-brain && bash scripts/hello.sh'`
 
 ### Why this matters
 
-Without Hello, every new session on a different machine starts with "where are my files?"  The human becomes the meat puppet again | navigating directories, explaining what's installed, re-establishing context.  Hello eliminates that startup tax.
+Without Hello, every new session on a different machine starts with "where are my files?"  The human becomes the meat puppet again | navigating directories, explaining what's installed, re-establishing context.  Hello eliminates that startup tax. Without a **written** tag-in, overlapping first-party sessions cannot see who is holding the ball.
 
 | Protocol Event | Trigger | Action | Transport |
 |----------------|---------|--------|-----------|
-| **EOL** | Session end | Write handoff, log journal, commit, push | Git push |
-| **Hello** | Session start | Pull, sync skills, read handoff, report status | Git pull |
+| **Hello** | Session start | Fetch, read baton, prepend `[active]` tag-in, push | Git push |
+| **EOL** | Session end | Fill your `[active]` entry in place, journal, commit, push | Git push |
 
 ---
 
@@ -818,70 +828,82 @@ Option 3 is the most likely path — the inbox pipeline already exists and every
 
 ---
 
-## Component 10: Dual-Runtime Peers (Cursor + Claude)
+## Component 10: First-Party Runtimes
 
-**Added:** August 12, 2026
+**Added:** August 12, 2026 (Cursor + Claude as v2.5)
+**Updated:** August 12, 2026 (v2.6 — Copilot, Codex, ChatGPT; canonical `MEP.md`; Hello tag-in)
 **Status:** Production | templates and skills ship in this repo
 
-### The Problem (v2.5)
+### The Problem
 
 MEP v1 assumed one coding runtime. The identity file was `CLAUDE.md` because Claude Code was the first agent that loaded a repo file and then enforced the protocol on itself.
 
-Cursor does not load `CLAUDE.md`. A project that uses both Cursor and Claude Code, and only ships `CLAUDE.md`, is running MEP on one side of the pair. The other side starts cold. The human becomes the meat puppet again: "Claude did X yesterday, here's what you need to know."
+Any other git-capable coding agent that does not load `CLAUDE.md` starts cold. The human becomes the meat puppet again: "Claude did X yesterday, here's what you need to know."
 
-Cursor is not a spoke like Grok or ChatGPT. Cursor has repo write access. It can Hello, it can EOL, it can conflict-resolve. Treating it as an inbound conversation URL wastes the whole protocol.
+Cursor, GitHub Copilot, and OpenAI Codex are not spokes like a pasted Grok URL. They have repo write access. They can Hello, they can EOL, they can conflict-resolve. Treating them as inbound conversation URLs wastes the protocol.
+
+Duplicating the session protocol in every identity file creates drift. Two loaders with slightly different Hello/EOL rules is a protocol bug.
 
 ### The Solution
 
-**Same baton. Two identity files. Peer writers.**
+**One protocol file. Thin loaders. One baton. Peer writers.**
 
-| Runtime | Identity file (auto-loaded) | Always-on injection | Skill |
-|---------|-----------------------------|---------------------|-------|
-| Claude Code | `CLAUDE.md` | (file load) | `skills/MEP_RELAY.md` |
-| Cursor IDE / Cloud Agent / CLI | `AGENTS.md` | `.cursor/rules/mep.mdc` | `skills/cursor/mep-relay/SKILL.md` |
+`MEP.md` is the only copy of Hello, EOL, git posture, and the runtime registry. Identity files load it. They do not restate it.
 
-The Session Protocol section in `CLAUDE.md` and `AGENTS.md` MUST stay identical. Drift between those two files is a protocol bug: one runtime will Hello/EOL differently than the other, and the human is back in the relay.
+| Runtime | Loader (auto-loaded) | Extra injection | Skill / seed |
+|---------|----------------------|-----------------|--------------|
+| Claude Code | `CLAUDE.md` → `MEP.md` | — | `skills/MEP_RELAY.md` |
+| Cursor | `AGENTS.md` → `MEP.md` | `.cursor/rules/mep.mdc` | `skills/cursor/mep-relay/SKILL.md` |
+| GitHub Copilot | `AGENTS.md` → `MEP.md` | `.github/copilot-instructions.md` | `skills/copilot/README.md` |
+| OpenAI Codex | `AGENTS.md` → `MEP.md` | `.agents/skills/mep-relay/` | `templates/agents-skills/mep-relay/SKILL.md` |
+| ChatGPT (no git) | operator pastes seed | Standing Standup URL | `templates/openai/SEED_PROMPT.md` |
 
-Templates: `templates/CLAUDE.md`, `templates/AGENTS.md`, `templates/cursor-rules/mep.mdc`. Worked example: `examples/cursor-claude/`.
+Worked example: `examples/first-party/`.
+
+**Microsoft Copilot** in this protocol means **GitHub Copilot** (VS Code chat, coding agent, CLI). Microsoft 365 Copilot has no git write; it is a standup reader, same class as disconnected ChatGPT, using the seed prompt if it can see a file.
+
+**OpenAI** splits in two: **Codex** is a git writer (first-party, `AGENTS.md`). **ChatGPT** without git is first-party in format (v2 headers, `[ChatGPT]` owner tag) but still needs one operator paste to land the baton.
+
+Grok and Gemini remain spokes (Components 7–9) until they grow a git-writing coding agent. When they do, add a loader that points at `MEP.md`. Do not fork the protocol.
+
+### Canonical `MEP.md`
+
+v2.5 required `CLAUDE.md` and `AGENTS.md` to keep identical Session Protocol sections. That does not scale to five loaders. v2.6 moves the protocol to `MEP.md`. Loaders are pointers plus, for `AGENTS.md`, project identity.
+
+### Default baton path
+
+`handoff.md` at the repo root. `machines/handoff.md` is a legacy alias used only when the default file is missing. Do not invent a third path.
+
+### Hello writes tag-in
+
+Hello is not read-only. The session prepends a v2 entry with `Tag-out: [active]`, copies pending items forward, and pushes if it can. EOL fills **that** entry in place. Concurrent sessions are sibling `[active]` entries. Never edit another agent's active stub.
+
+A Hello that does not publish the tag-in is invisible. Push failure must not block the human — report it and continue.
 
 ### Git posture
 
-Claude Code often commits on `main` or a named worktree. Cursor Cloud Agents typically work on a feature branch and open a PR. The baton still has to be visible to the other runtime.
-
-Rules:
-
-1. **Never force-push `main` or `master`.** The original conflict-recovery skill said `git push --force-with-lease` after rebase. That is safe only on a branch this session created. On the default branch it is how one runtime erases the other's baton.
-2. **Hello is fetch, not merge.** `git pull` at session start can invent merge commits and clobber in-progress work. Fetch, read the baton (including `origin/<default-branch>` when you are not on default), fast-forward only when it is safe.
-3. **PR-only sessions still write the baton.** If the session cannot land `handoff.md` on the default branch, write the entry on the working branch **and** paste the newest entry into the PR body so the other runtime can read it before merge.
-4. **Do not edit another agent's entry.** Append. Newest on top. History preserved below.
+1. **Never force-push `main` or `master`.** `--force-with-lease` only on a branch this session created.
+2. **Hello is fetch + tag-in, not merge.**
+3. **PR-only sessions** (Cursor Cloud, Copilot coding agent) write the baton on the working branch **and** paste the newest entry into the PR body.
+4. **Do not edit another agent's entry** except your own `[active]` stub at EOL.
 
 ### Same-day ordering
 
-Date-only newest-first is not enough when both runtimes work on the same calendar day. Dual-runtime repos MUST use v2 headers with tag-in/tag-out timestamps and a timezone (prefer UTC). Same-day entries order by tag-out (`[active]` sorts first).
-
-`scripts/check-handoff.py` enforces this. Schema: `spec/handoff-schema.md` v1.1.
+Date-only newest-first fails when several runtimes share a calendar day. v2 headers with UTC timestamps are required. `[active]` sorts first. `scripts/check-handoff.py` (schema 1.2) enforces this. CI: `.github/workflows/mep-handoff.yml`.
 
 ### EOL triggers
 
-The word `done` is not an EOL trigger. Coding sessions say it constantly. Dual-runtime false positives (one runtime committing a half-written baton because someone said "done with this function") put the human back in the loop to clean up.
-
-Canonical triggers: `/eol`, `p-out`, `ppp`, "wrap up", "heading out", "switching machines", "end of line".
-
-### Concurrent sessions
-
-If the newest entry is still `Tag-out: [active]`, another session may be live. Write a sibling entry. Do not rewrite the active one. The original protocol assumed sessions do not overlap. Cursor Cloud + Claude Code can overlap. The file's structure still works if entries are append-only.
+The word `done` is not an EOL trigger. Canonical: `/eol`, `p-out`, `ppp`, "wrap up", "heading out", "switching machines", "end of line".
 
 ### Relationship to other components
 
-| | Claude-only (v1) | Dual-runtime (v2.5) |
-|---|---|---|
-| **Identity** | `CLAUDE.md` | `CLAUDE.md` + `AGENTS.md` + Cursor rule |
-| **Baton** | `handoff.md` | Same file, v2 headers required |
-| **Writers** | One runtime, many machines | Two runtimes, many machines |
-| **Conflict recovery** | Newest date wins; force-with-lease on worktree | Newest date then timestamp; never force default branch |
-| **Hub** | Claude | Whoever has git write — both |
-
-Grok, ChatGPT, and Gemini remain spokes (Components 7–9). Cursor is a peer.
+| | Claude-only (v1) | Dual-runtime (v2.5) | First-party (v2.6) |
+|---|---|---|---|
+| **Protocol** | inside `CLAUDE.md` | copied in two identity files | `MEP.md` only |
+| **Baton** | `machines/handoff.md` or root | either path | `handoff.md` (legacy alias documented) |
+| **Writers** | Claude | Claude + Cursor | Claude, Cursor, Copilot, Codex; ChatGPT via paste |
+| **Hello** | read baton | read baton | write `[active]` tag-in |
+| **Hub** | Claude | whoever has git write | same — every git runtime is a hub |
 
 ---
 
@@ -929,6 +951,7 @@ Prior to 2.3 this document carried a stale version field.  Its body was maintain
 | 2.3 | 2026-08-11 | Reconciliation. Version metadata corrected, emergent pidgin recorded, version history added, website copies reconciled against this document as canonical |
 | 2.4 | 2026-08-11 | Relicensed to full open source. AGPL-3.0 replaced by Apache 2.0 for code and CC BY 4.0 for specifications.  Implementing MEP now requires no permission and imposes no obligation |
 | **2.5** | **2026-08-12** | **Component 10: Dual-Runtime Peers.** Cursor is a peer writer of the same baton (`AGENTS.md`, Cursor rule, Cursor skill). Same-day timestamp ordering. Safer git posture. `done` is not an EOL trigger. Conformance checker ships. |
+| **2.6** | **2026-08-12** | **First-party runtimes.** Canonical `MEP.md`. Hello writes `[active]` tag-in. Default baton path `handoff.md`. GitHub Copilot, OpenAI Codex, and ChatGPT are first-party. Checker in CI. |
 
 **Canonical source:** this file.  The website renders from it.  Any other copy is a mirror and defers to this one on conflict.
 

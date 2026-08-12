@@ -6,6 +6,35 @@ Format: `## [version] — YYYY-MM-DD`
 
 ---
 
+## 2.6 | 2026-08-12
+
+**First-party runtimes. Canonical `MEP.md`. Hello tag-in.**
+
+v2.5 put the session protocol in every identity file and called Cursor a peer. Five loaders will drift. v2.6 puts Hello, EOL, and git posture in one file. Copilot, Codex, and ChatGPT join as first-party participants.
+
+### Added
+- `templates/MEP.md` — the only copy of the session protocol
+- Thin loaders: `CLAUDE.md`, `AGENTS.md`, `.cursor/rules/mep.mdc`, `.github/copilot-instructions.md`
+- Codex skill: `templates/agents-skills/mep-relay/SKILL.md` → `.agents/skills/`
+- ChatGPT seed: `templates/openai/SEED_PROMPT.md`
+- `examples/first-party/` — Claude, Cursor, Copilot, Codex, ChatGPT
+- Hello **writes** `Tag-out: [active]` and pushes if it can; EOL fills that entry in place
+- Default baton path: `handoff.md` (legacy alias `machines/handoff.md`)
+- `.github/workflows/mep-handoff.yml` — `python3 scripts/check-handoff.py --ci`
+- Handoff schema 1.2 (Hello stubs, in-place EOL)
+
+### Changed
+- Identity files no longer contain the protocol. They point at `MEP.md`.
+- Component 10 renamed/expanded from Cursor+Claude to first-party runtimes
+- `examples/cursor-claude/` is a pointer at `examples/first-party/`
+
+### Design Decisions
+- GitHub Copilot = Microsoft's first-party coding agent. M365 Copilot is a standup reader (no git).
+- OpenAI splits: Codex is a git writer (`AGENTS.md`). ChatGPT without git uses the seed prompt and one paste.
+- Grok and Gemini stay spokes until they ship a git-writing coding agent. Then add a loader, do not fork `MEP.md`.
+
+---
+
 ## 2.5 | 2026-08-12
 
 **Component 10: Dual-Runtime Peers (Cursor + Claude).**

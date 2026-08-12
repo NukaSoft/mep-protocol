@@ -73,18 +73,21 @@ The handoff file's structure isn't arbitrary. It's what makes autonomous conflic
 
 **The self-enforcing protocol bootstrap.**
 
-A markdown file at the repo root that the AI agent loads automatically at session start. The protocol instructions — including "read the handoff file" — are embedded directly in this file.
+A markdown file at the repo root that the AI agent loads automatically at session start.
 
-The filename is runtime-specific:
+The **protocol** lives in `MEP.md` (one copy). Identity files are loaders that say "read `MEP.md`, then Hello":
 
-| Runtime | Identity file |
-|---------|---------------|
+| Runtime | Loader |
+|---------|--------|
 | Claude Code | `CLAUDE.md` |
-| Cursor (IDE, Cloud Agent, CLI) | `AGENTS.md` plus `.cursor/rules/mep.mdc` |
+| Cursor | `AGENTS.md` plus `.cursor/rules/mep.mdc` |
+| GitHub Copilot | `.github/copilot-instructions.md` plus `AGENTS.md` |
+| OpenAI Codex | `AGENTS.md` |
+| ChatGPT (no git) | seed prompt (`templates/openai/SEED_PROMPT.md`) |
 
-A repo that both runtimes write needs both files, with identical Session Protocol sections. An identity file the runtime does not load is not self-enforcing.
+Project identity lives in `AGENTS.md`. An identity file the runtime does not load is not self-enforcing. Duplicating Hello/EOL in every loader is a drift bug.
 
-**Key insight:** The protocol is self-enforcing. No daemon, no server, no runtime. The agent reads its own instructions, which tell it to follow the protocol. The human doesn't have to remember to invoke anything.
+**Key insight:** The protocol is self-enforcing. No daemon, no server, no runtime. The agent reads its own loader, which points at `MEP.md`. The human doesn't have to remember to invoke anything.
 
 ---
 
@@ -371,15 +374,23 @@ The operator opens sessions and directs work.  Context flows automatically in bo
 
 ---
 
+## First-Party Runtime
+
+**A coding agent with git write access that Hello/EOLs `handoff.md` itself.**
+
+Claude Code, Cursor, GitHub Copilot, and OpenAI Codex are first-party. ChatGPT without git is first-party in *format* (v2 headers, `[ChatGPT]` owner tag) but still needs one operator paste to land the baton.
+
+This is distinct from **spokes** (Grok, Gemini, M365 Copilot) that do not share the repo and return context through conversation URLs or a Standing Standup.
+
+Required: `MEP.md`, `AGENTS.md`, the loaders each runtime actually reads, v2 handoff headers with UTC, Hello `[active]` tag-in, no force-push to the default branch.
+
+**See also:** [Identity File](#identity-file), [Component 10](spec/mep-protocol.md#component-10-first-party-runtimes)
+
+---
+
 ## Dual-Runtime
 
-**A repo written by more than one coding agent that both have git access.**
-
-Cursor + Claude Code is the first instance. Both are peer writers of the same baton. This is distinct from cross-ecosystem spokes (Grok, ChatGPT, Gemini), which do not share the repo and return context through conversation URLs.
-
-Required: `CLAUDE.md` and `AGENTS.md` with identical Session Protocol sections, `.cursor/rules/mep.mdc`, v2 handoff headers with timezones, and no force-push to the default branch.
-
-**See also:** [Identity File](#identity-file), [Component 10](spec/mep-protocol.md#component-10-dual-runtime-peers-cursor--claude)
+Historical term from MEP 2.5 for Cursor + Claude. Superseded by [First-Party Runtime](#first-party-runtime).
 
 ---
 

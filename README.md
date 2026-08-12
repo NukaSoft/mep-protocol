@@ -3,7 +3,7 @@
 **Meat Puppet Elimination Protocol** — a self-enforcing asynchronous state relay for AI sessions across machines.
 
 [![Code: Apache 2.0](https://img.shields.io/badge/Code-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0) [![Docs: CC BY 4.0](https://img.shields.io/badge/Docs-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![MEP Version](https://img.shields.io/badge/MEP-v2.5-green.svg)](spec/mep-protocol.md)
+[![MEP Version](https://img.shields.io/badge/MEP-v2.6-green.svg)](spec/mep-protocol.md)
 [![Status: Production](https://img.shields.io/badge/Status-Production%20Proven-brightgreen.svg)](spec/mep-protocol.md#milestone-first-autonomous-ci-recovery)
 
 ---
@@ -16,12 +16,13 @@ You are the meat puppet.
 
 ## The Solution
 
-MEP eliminates you from the relay loop. Four components:
+MEP eliminates you from the relay loop:
 
 | Component | What It Does |
 |-----------|-------------|
-| **Identity File** (`CLAUDE.md` / `AGENTS.md`) | Loads automatically for that runtime. Self-enforces the protocol. Cursor also needs `.cursor/rules/mep.mdc`. |
-| **Handoff File** (`handoff.md`) | Carries curated context between sessions. Structured, newest-first. The baton. |
+| **Canonical protocol** (`MEP.md`) | The only copy of Hello, EOL, and git posture. Identity files are loaders. |
+| **Identity loaders** | `CLAUDE.md`, `AGENTS.md`, `.github/copilot-instructions.md`, `.cursor/rules/mep.mdc` |
+| **Handoff File** (`handoff.md`) | Shared baton. Newest-first. Hello writes `[active]`. |
 | **Transport Layer** (Git) | Versioned, encrypted, conflict-resolution built in. Enterprise-grade security. Zero management. |
 | **Self-Enforcement** | No human action required. The agent reads, follows, and executes the protocol on itself. |
 
@@ -40,34 +41,40 @@ gh repo create my-project --private
 # 2. Clone it
 git clone https://github.com/you/my-project && cd my-project
 
-# 3. Copy the templates
-cp path/to/mep-protocol/templates/CLAUDE.md .
-cp path/to/mep-protocol/templates/handoff.md machines/handoff.md
-
-# 4. Edit CLAUDE.md with your project identity
-# 5. Push and start a Claude Code session
-git add . && git commit -m "MEP: initialize" && git push
-claude
-```
-
-That's it. The protocol is active.
-
-### Cursor + Claude (dual-runtime)
-
-If both Cursor and Claude Code write the repo, one identity file is not enough. Cursor does not load `CLAUDE.md`. Copy both, plus the Cursor rule, and keep the Session Protocol sections identical:
-
-```bash
+# 3. Copy the canonical protocol and the baton
+cp path/to/mep-protocol/templates/MEP.md .
+cp path/to/mep-protocol/templates/handoff.md handoff.md
 cp path/to/mep-protocol/templates/CLAUDE.md .
 cp path/to/mep-protocol/templates/AGENTS.md .
-cp path/to/mep-protocol/templates/handoff.md handoff.md
-mkdir -p .cursor/rules .cursor/skills/mep-relay
-cp path/to/mep-protocol/templates/cursor-rules/mep.mdc .cursor/rules/mep.mdc
-cp path/to/mep-protocol/skills/cursor/mep-relay/SKILL.md .cursor/skills/mep-relay/SKILL.md
+
+# 4. Edit AGENTS.md with your project identity
+# 5. Push and start a session
+git add . && git commit -m "MEP: initialize" && git push
 ```
 
-Worked example: [`examples/cursor-claude/`](examples/cursor-claude/). Spec: [Component 10](spec/mep-protocol.md#component-10-dual-runtime-peers-cursor--claude).
+That's it for Claude Code + any `AGENTS.md` loader (Cursor, Codex, Copilot coding agent).
 
-Validate a baton with `python3 scripts/check-handoff.py handoff.md`.
+### First-party (Claude, Cursor, Copilot, Codex, ChatGPT)
+
+Copy the full loader set so every git runtime Hello/EOLs the same baton:
+
+```bash
+cp path/to/mep-protocol/templates/MEP.md .
+cp path/to/mep-protocol/templates/AGENTS.md .
+cp path/to/mep-protocol/templates/CLAUDE.md .
+cp path/to/mep-protocol/templates/handoff.md handoff.md
+mkdir -p .cursor/rules .cursor/skills/mep-relay .github .agents/skills/mep-relay
+cp path/to/mep-protocol/templates/cursor-rules/mep.mdc .cursor/rules/mep.mdc
+cp path/to/mep-protocol/skills/cursor/mep-relay/SKILL.md .cursor/skills/mep-relay/SKILL.md
+cp path/to/mep-protocol/templates/github/copilot-instructions.md .github/copilot-instructions.md
+cp path/to/mep-protocol/templates/agents-skills/mep-relay/SKILL.md .agents/skills/mep-relay/SKILL.md
+```
+
+ChatGPT without git: paste `templates/openai/SEED_PROMPT.md`.
+
+Worked example: [`examples/first-party/`](examples/first-party/). Spec: [Component 10](spec/mep-protocol.md#component-10-first-party-runtimes).
+
+Validate: `python3 scripts/check-handoff.py --ci`
 
 ---
 
@@ -129,21 +136,29 @@ mep-protocol/
 │   ├── handoff-schema.md      BNF grammar + conformance tests
 │   └── meep-readonly-v1.md    Read-only peer-agent context surface (sibling spec)
 ├── templates/
-│   ├── CLAUDE.md              Claude Code identity + session protocol
-│   ├── AGENTS.md              Cursor / AGENTS.md identity + session protocol
-│   ├── cursor-rules/mep.mdc   Always-on Cursor rule
-│   ├── handoff.md             Blank baton template
+│   ├── MEP.md                 Canonical session protocol (the only copy)
+│   ├── CLAUDE.md              Claude Code loader → MEP.md
+│   ├── AGENTS.md              Project identity + loader (Cursor, Codex, Copilot)
+│   ├── cursor-rules/mep.mdc   Always-on Cursor rule → MEP.md
+│   ├── github/copilot-instructions.md
+│   ├── agents-skills/mep-relay/  Codex skill
+│   ├── openai/SEED_PROMPT.md  ChatGPT without git
+│   ├── handoff.md             Blank baton (default path: repo root)
 │   ├── shared-handoff.md      Blank Standing Standup template
 │   └── NUKA-LOG.md            Blank authorship log template
 ├── skills/
-│   ├── MEP_RELAY.md           Claude Code skill (/mep start|end|status)
-│   └── cursor/mep-relay/      Cursor skill (same commands)
+│   ├── MEP_RELAY.md           Claude Code skill
+│   ├── cursor/mep-relay/      Cursor skill
+│   ├── copilot/               GitHub Copilot notes
+│   └── openai/                Codex / ChatGPT notes
 ├── scripts/
-│   └── check-handoff.py       Handoff conformance checker
+│   └── check-handoff.py       Handoff conformance checker (`--ci`)
+├── .github/workflows/         Checker CI
 ├── tests/handoff/             Checker fixtures
 └── examples/
-    ├── minimal/               Bare-bones Claude-only example
-    ├── cursor-claude/         Dual-runtime (Cursor + Claude) example
+    ├── minimal/               Claude-only (MEP.md + CLAUDE.md)
+    ├── first-party/           Claude, Cursor, Copilot, Codex, ChatGPT
+    ├── cursor-claude/         Pointer at first-party
     └── shared-surface/        Filled Standing Standup example
 ```
 

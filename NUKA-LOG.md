@@ -232,3 +232,25 @@ Pierre directed a Cursor Cloud Agent to review the MEP protocol Claude authored,
 - Moved the filled NukaSoft standup out of `templates/` into `examples/shared-surface/`
 - Removed leftover AGPL "network service" language from the README after the 2.4 relicense
 
+---
+
+## Log Entry 007
+**Date:** 2026-08-12
+**Sprint:** First-party runtimes — Copilot, Codex, ChatGPT + canonical MEP.md
+
+### Strategic Intent (Pierre)
+After the Cursor review, Pierre directed: build the follow-ups (canonical protocol file, Hello tag-in, one baton path, CI) and plan Microsoft Copilot, OpenAI, and Codex as first-party participants, not spokes.
+
+### Technical Steerage
+- One `MEP.md`. Loaders point at it. Do not copy Hello/EOL into five identity files.
+- Default baton is `handoff.md` at repo root. `machines/handoff.md` is legacy.
+- Hello must write `Tag-out: [active]` so overlapping sessions are visible.
+- GitHub Copilot = Microsoft's git-writing coding agent. M365 Copilot is a standup reader.
+- OpenAI splits: Codex writes git via `AGENTS.md`. ChatGPT without git uses a seed prompt and one paste.
+
+### Machine Execution (Cursor)
+- `templates/MEP.md` plus thin loaders for Claude, Cursor, Copilot, Codex
+- ChatGPT `SEED_PROMPT.md`; Codex `.agents/skills` skill
+- `examples/first-party/`; checker `--ci`; GitHub Action
+- Spec Component 10 expanded; schema 1.2; MEP 2.6
+

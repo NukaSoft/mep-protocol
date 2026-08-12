@@ -3,25 +3,23 @@
 Last updated at end of session. Read this first.
 
 <!--
-MEP Protocol — Baton Template v2.5
-Newest entry ALWAYS on top.
-Three sections per entry: What happened / What's pending / Watch out for
-Dual-runtime repos (Cursor + Claude) MUST use the v2 header with timestamps.
+MEP Protocol — Baton Template v2.6
+Default path: handoff.md (repo root).
+Newest entry ALWAYS on top. v2 headers with UTC timestamps.
+Hello prepends Tag-out: [active]. EOL fills that entry in place.
 License: Apache-2.0 | Copyright 2026 Pierre Hulsebus / NukaSoft.AI
 -->
 
 ---
 
 ## YYYY-MM-DD — Agent | Runtime | session-type
-**Tag-in:** HH:MM UTC | **Tag-out:** HH:MM UTC
+**Tag-in:** HH:MM UTC | **Tag-out:** [active]
 
 ### What happened
-- [Concise bullet list of accomplishments this session]
-- [Focus on deliverables and decisions, not process]
+- Tagged in. Baton read.
 
 ### What's pending
 - [ ] **[Owner]** Task description with enough context to act on it
-- [ ] Another open item
 
 ### Watch out for
 - [Optional: traps, stale state, known issues for the next session]

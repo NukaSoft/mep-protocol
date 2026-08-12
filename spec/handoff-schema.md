@@ -1,6 +1,6 @@
 # MEP Handoff Schema — Formal Specification
 
-**Version:** 1.1
+**Version:** 1.2
 **Date:** 2026-08-12
 **License:** CC BY 4.0 | Copyright 2026 Pierre Hulsebus / NukaSoft.AI
 
@@ -43,9 +43,11 @@ newline         ::= "\n"
 
 **Entries MUST be ordered newest-first.** The most recent entry appears at the top of the file. This is not a convention — it is a protocol requirement. The autonomous conflict resolution capability of MEP depends on this ordering being machine-parseable.
 
-**Date is the primary key. Timestamp is the tie-breaker.** Two entries on the same `YYYY-MM-DD` MUST be ordered by tag-out time, newest first. `[active]` sorts above any completed tag-out. Dual-runtime repos (Cursor + Claude) produce same-day pairs as a matter of course; date-only ordering is not sufficient there.
+**Date is the primary key. Timestamp is the tie-breaker.** Two entries on the same `YYYY-MM-DD` MUST be ordered by tag-out time, newest first. `[active]` sorts above any completed tag-out. First-party repos (Claude, Cursor, Copilot, Codex) produce same-day pairs as a matter of course; date-only ordering is not sufficient there.
 
-Timestamps MUST include a timezone. Prefer UTC. `scripts/check-handoff.py` enforces date order and same-day timestamp order.
+**Hello stub:** A live session prepends an entry with `Tag-out: [active]` and copies pending items forward. EOL updates **that** entry in place. Concurrent `[active]` entries are allowed; they are sibling sessions.
+
+Timestamps MUST include a timezone. Prefer UTC. `scripts/check-handoff.py` enforces date order and same-day timestamp order. Default baton path: `handoff.md`. Legacy alias: `machines/handoff.md` only if the default is missing.
 
 ```
 ## 2026-04-03 — Hot Rod (main)        ← newest, read first
@@ -221,6 +223,21 @@ agent-tag       ::= "**Tag-in:** " timestamp " | " "**Tag-out:** " timestamp
 ```markdown
 ## 2026-08-12 — Skippy | Claude Code | code
 **Tag-in:** 15:10 UTC | **Tag-out:** 17:00 UTC
+```
+
+```markdown
+## 2026-08-12 — Copilot | Copilot (GitHub) | code
+**Tag-in:** 18:00 UTC | **Tag-out:** [active]
+```
+
+```markdown
+## 2026-08-12 — Codex | Codex (OpenAI) | code
+**Tag-in:** 17:40 UTC | **Tag-out:** 18:10 UTC
+```
+
+```markdown
+## 2026-08-12 — ChatGPT | ChatGPT (OpenAI) | research
+**Tag-in:** 16:00 UTC | **Tag-out:** 16:45 UTC
 ```
 
 ```markdown
