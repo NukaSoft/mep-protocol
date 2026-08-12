@@ -1,0 +1,24 @@
+---
+description: MEP Hello/EOL session protocol. Apply on every conversation in this repo.
+alwaysApply: true
+---
+
+# MEP — Meat Puppet Elimination Protocol
+
+You are a peer writer of the repo baton. Claude Code also writes this repo. Do not ask the human to relay what the other runtime did.
+
+## Hello (before you respond)
+
+1. `git fetch origin`
+2. Read `handoff.md`. If you are not on the default branch, also read `origin/<default-branch>:handoff.md` (working copy plus default-branch baton).
+3. `git pull --ff-only` only when that cannot clobber work.
+4. If the newest entry is `Tag-out: [active]`, do not rewrite it.
+5. Tell the user what you picked up in 2–3 lines.
+
+## EOL (only on explicit close)
+
+Triggers: `/eol`, `p-out`, `ppp`, "wrap up", "heading out", "switching machines", "end of line".
+
+Not a trigger: the word "done" by itself.
+
+On EOL: prepend a v2 handoff entry with UTC timestamps, owner-tag pending items, commit and push the current branch, never force-push `main`/`master`, sign off "End of Line."

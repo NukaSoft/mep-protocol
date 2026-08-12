@@ -50,9 +50,9 @@ The `explorations/` directory matters for a different reason.  A serious protoco
 **Sprint:** Transport Layer Experiments & Protocol Architecture
 
 ### Strategic Intent (Pierre)
-Eliminate myself as the manual context relay between AI sessions. I was re-explaining context every time I switched machines â€” Mac to Hot Rod and back. The cost was 5â€“15 minutes per switch, and it was entirely unnecessary. The goal: open a session on any machine and pick up exactly where the last one left off. Zero re-explanation. Zero meat puppet.
+Eliminate myself as the manual context relay between AI sessions. I was re-explaining context every time I switched machines — Mac to Hot Rod and back. The cost was 5–15 minutes per switch, and it was entirely unnecessary. The goal: open a session on any machine and pick up exactly where the last one left off. Zero re-explanation. Zero meat puppet.
 
-### Technical Steerage â€” Transport Layer Experiments
+### Technical Steerage — Transport Layer Experiments
 I directed empirical evaluation of multiple transport candidates before settling on Git. This was not a philosophical choice. We ran the experiments.
 
 | Transport | Tested | Result | My Decision |
@@ -60,16 +60,16 @@ I directed empirical evaluation of multiple transport candidates before settling
 | Local SAN files | Yes | Machine-local only; broke multi-machine goal | Rejected |
 | Google Doc | Yes | No version history; merge conflicts unresolvable by agent | Rejected |
 | iCloud | Yes | Unstructured; unpredictable sync timing; no diff capability | Rejected |
-| OneDrive | Yes | Same problems as iCloud â€” no structure, no diff | Rejected |
-| Shared Git + SMB/UMB file share | Yes | Worked but failed intermittently â€” file locking (see Log 001b) | Rejected |
+| OneDrive | Yes | Same problems as iCloud — no structure, no diff | Rejected |
+| Shared Git + SMB/UMB file share | Yes | Worked but failed intermittently — file locking (see Log 001b) | Rejected |
 | **Git (GitHub)** | **Yes** | **Versioned, diffable, encrypted in transit, 2FA, audit log, conflict resolution built in** | **Selected** |
 
 Key finding: the transport layer must support **structured diffing**. Unstructured transports fail because the agent cannot reason about merge conflicts autonomously. Git won because structure enables autonomous reasoning.
 
 ### Additional Steerage
-- I named the protocol "Meat Puppet Elimination" on March 22, 2026 â€” my 62nd birthday
+- I named the protocol "Meat Puppet Elimination" on March 22, 2026 — my 62nd birthday
 - I chose markdown over JSON for the baton: human-readable, diffable, autonomously mergeable
-- I established the format-agnostic principle: any human-readable text two machines can exchange is a valid transport (MD, TXT, HTML, email body, Apple Reminders). Markdown is the reference implementation format because it is the best native option â€” not because the protocol requires it.
+- I established the format-agnostic principle: any human-readable text two machines can exchange is a valid transport (MD, TXT, HTML, email body, Apple Reminders). Markdown is the reference implementation format because it is the best native option — not because the protocol requires it.
 - I directed the EOL keyword system: `/eol`, `p-out`, `ppp` trigger automatic commit and push
 
 ### Machine Execution (Claude)
@@ -95,7 +95,7 @@ After initial Git latency concerns, I directed exploration of shared file system
 - My decision: abandon shared file system entirely. Return to Git as sole transport.
 
 ### Key Insight
-The file locking failure *validated* Git's design choice. Git doesn't lock files â€” it versions them and resolves conflicts post-hoc. This is the correct primitive for stateless agent handoffs where sessions don't overlap.
+The file locking failure *validated* Git's design choice. Git doesn't lock files — it versions them and resolves conflicts post-hoc. This is the correct primitive for stateless agent handoffs where sessions don't overlap.
 
 ### Machine Execution (Claude)
 - Documented the SMB/UMB file locking problem
@@ -106,23 +106,23 @@ The file locking failure *validated* Git's design choice. Git doesn't lock files
 
 ## Log Entry 001c
 **Date:** Pre-2026-03-22
-**Sprint:** Final Architecture â€” EOL Pattern
+**Sprint:** Final Architecture — EOL Pattern
 
 ### Strategic Intent (Pierre)
-After the file locking dead end, I identified the OG EOL pattern as the right model. "That's how the original guys did it" â€” end-of-session scripts that automatically commit the state and close. I directed adoption of this pattern.
+After the file locking dead end, I identified the OG EOL pattern as the right model. "That's how the original guys did it" — end-of-session scripts that automatically commit the state and close. I directed adoption of this pattern.
 
 ### Technical Steerage
 - EOL keyword triggers: automatic handoff update + commit + push to repo
-- GitHub becomes the transport layer â€” not as a file share, but as a managed infrastructure service:
+- GitHub becomes the transport layer — not as a file share, but as a managed infrastructure service:
   - Encryption at rest: built in, zero management
   - 2FA and access control: built in
   - Audit log: built in (every commit is timestamped, attributed)
   - Conflict resolution: built in (Git merge semantics)
-- My framing: "Do Nothing in Action" â€” enterprise-grade security requirements met by using infrastructure that already exists in every dev workflow
+- My framing: "Do Nothing in Action" — enterprise-grade security requirements met by using infrastructure that already exists in every dev workflow
 
 ### Machine Execution (Claude)
 - Implemented EOL trigger keywords in CLAUDE.md
-- Built EOL sequence: update handoff.md â†’ append daily journal â†’ git commit â†’ push â†’ "End of Line."
+- Built EOL sequence: update handoff.md → append daily journal → git commit → push → "End of Line."
 - GitHub encryption at rest satisfies enterprise data-at-rest requirements with zero additional overhead
 
 ---
@@ -132,7 +132,7 @@ After the file locking dead end, I identified the OG EOL pattern as the right mo
 **Sprint:** First Autonomous CI Recovery
 
 ### Strategic Intent (Pierre)
-I directed Claude to document the autonomous PR conflict resolution event as a formal protocol milestone â€” not just a git incident. I identified that the failure-recovery arc was the missing piece: the initial failure, the self-diagnosis, and the autonomous retry.
+I directed Claude to document the autonomous PR conflict resolution event as a formal protocol milestone — not just a git incident. I identified that the failure-recovery arc was the missing piece: the initial failure, the self-diagnosis, and the autonomous retry.
 
 ### Technical Steerage
 - Pierre confirmed: the initial failure is what makes this significant. A clean resolution would be routine. A failure, self-diagnosis, and autonomous fix is the milestone.
@@ -140,14 +140,14 @@ I directed Claude to document the autonomous PR conflict resolution event as a f
 
 ### Machine Execution (Claude)
 - PR #12 (`Nagatha/dreamy-lamarr`) had a merge conflict in `machines/handoff.md`
-- Main branch was 15 commits ahead (Apr 01â€“02 Hot Rod sessions)
-- Initial EOL sequence failed â€” conflict blocked the push
+- Main branch was 15 commits ahead (Apr 01–02 Hot Rod sessions)
+- Initial EOL sequence failed — conflict blocked the push
 - On retry (no human intervention): re-read handoff.md from scratch, identified the newest-first structural rule from existing entries, diagnosed the positioning error, wrote the correct resolution, rebased onto main, force-pushed
 - EOL sequence completed autonomously
 - Updated mep-protocol.md with First Autonomous CI Recovery milestone section
 
 ### Why This Matters
-MEP was designed to eliminate the human from the context relay loop. This event proves it can close the CI feedback loop too. The handoff file's structure â€” chronological, newest-first, three named sections â€” is what made autonomous diagnosis possible. The agent could reason about "correct" without being told what correct meant.
+MEP was designed to eliminate the human from the context relay loop. This event proves it can close the CI feedback loop too. The handoff file's structure — chronological, newest-first, three named sections — is what made autonomous diagnosis possible. The agent could reason about "correct" without being told what correct meant.
 
 ---
 
@@ -157,8 +157,8 @@ MEP was designed to eliminate the human from the context relay loop. This event 
 
 ### Strategic Intent (Pierre)
 Directed formalization of MEP as a standalone publishable protocol. Two tracks:
-1. `NukaSoft/mep-protocol` â€” AGPL-3.0, full sovereignty, NukaSoft brand, NUKA-LOG IP protection
-2. PR to `anthropics/claude-code` â€” MIT, community contribution, designed for broad adoption
+1. `NukaSoft/mep-protocol` — AGPL-3.0, full sovereignty, NukaSoft brand, NUKA-LOG IP protection
+2. PR to `anthropics/claude-code` — MIT, community contribution, designed for broad adoption
 
 Commercial goal: if Anthropic accepts the PR, that is official validation + permanent attribution + exposure to every Claude Code user. Enterprise value proposition: GitHub as transport = enterprise-grade security (encryption at rest, 2FA, audit log) with zero management overhead.
 
@@ -168,7 +168,7 @@ Pierre directed: capture every use instance, every log, every PR. Build the evid
 - Pierre confirmed: AGPL-3.0 over MIT. Forces enterprise derivatives open.
 - Pierre confirmed: Markdown as native baton format, but document format-agnostic principle explicitly
 - Pierre confirmed: NUKA-LOG accuracy over template convenience. Courts care about accurate records.
-- Pierre identified the commercial headline: "Do Nothing" security â€” hardest enterprise requirement, zero overhead
+- Pierre identified the commercial headline: "Do Nothing" security — hardest enterprise requirement, zero overhead
 
 ### Machine Execution (Claude)
 - Created `NukaSoft/mep-protocol` GitHub repo
@@ -190,7 +190,7 @@ Identified a handoff conflict that occurred when a Mac worktree session (DNS inf
 
 ### Technical Steerage
 - Pierre identified this as a variant of the Entry 002 pattern: worktree branches create divergence by design, and MEP must handle the merge cleanly
-- The conflict was in `machines/handoff.md` â€” the core MEP baton file
+- The conflict was in `machines/handoff.md` — the core MEP baton file
 - The worktree session (Apr 5 DNS work) wrote a new handoff entry, while main's nightly automation added content-queue files. Both modified the same file from different starting points.
 - Pierre directed: document in NUKA-LOG as evidence of MEP operating under real multi-session workload
 
@@ -202,8 +202,55 @@ Identified a handoff conflict that occurred when a Mac worktree session (DNS inf
 - Merge back to main completed cleanly via `git merge Nagatha/brave-mahavira`
 
 ### Observations
-1. **Nightly automation is a conflict vector.** Any timer-driven commit (nightly content, captain's log) can create divergence if a worktree session is active. This is not a bug â€” it's the expected operating mode. MEP's newest-first ordering and structured sections enable clean resolution.
+1. **Nightly automation is a conflict vector.** Any timer-driven commit (nightly content, captain's log) can create divergence if a worktree session is active. This is not a bug — it's the expected operating mode. MEP's newest-first ordering and structured sections enable clean resolution.
 2. **Worktree branches are MEP's multi-session primitive.** Claude Code worktrees (`--isolation worktree`) create branches automatically. When these branches write to handoff.md, they create divergence that must be merged. The protocol handles this because the handoff schema is designed for it.
 3. **Second confirmed autonomous resolution.** Entry 002 was the first. This is the second. The pattern is consistent: read the file, identify the newest entry by date, position correctly, merge.
 
 <!-- sync:2026-08-12T15:10:04-04:00 | Uhura | 13 understandings published -->
+
+---
+
+## Log Entry 006
+**Date:** 2026-08-12
+**Sprint:** Dual-Runtime Peers — Cursor + Claude
+
+### Strategic Intent (Pierre)
+Pierre directed a Cursor Cloud Agent to review the MEP protocol Claude authored, and to use the protocol on projects that involve both Cursor and Claude. The public spec was Claude-centric: identity was `CLAUDE.md`, the skill lived under `~/.claude/skills/`, and Cursor was not a first-class writer.
+
+### Technical Steerage
+- Cursor does not load `CLAUDE.md`. Self-enforcement on the Cursor side requires `AGENTS.md` plus an always-on `.cursor/rules/mep.mdc`.
+- Cursor is a peer writer (git access), not a spoke (conversation URL). Dual-runtime is a different problem than Grok/ChatGPT inbound.
+- Date-only newest-first fails when both runtimes work the same day. v2 timestamps with timezones are required.
+- `git push --force-with-lease` on conflict recovery is unsafe on the default branch when two runtimes share the repo.
+- The word `done` is not an EOL trigger in coding sessions.
+
+### Machine Execution (Cursor)
+- Repaired UTF-8 mojibake across protocol documents (corrupted em dashes, box drawing, BNF separator)
+- Added `templates/AGENTS.md`, `templates/cursor-rules/mep.mdc`, `skills/cursor/mep-relay/`
+- Added `examples/cursor-claude/` and `scripts/check-handoff.py`
+- Spec Component 10 (v2.5) and handoff schema 1.1
+- Moved the filled NukaSoft standup out of `templates/` into `examples/shared-surface/`
+- Removed leftover AGPL "network service" language from the README after the 2.4 relicense
+
+---
+
+## Log Entry 007
+**Date:** 2026-08-12
+**Sprint:** First-party runtimes — Copilot, Codex, ChatGPT + canonical MEP.md
+
+### Strategic Intent (Pierre)
+After the Cursor review, Pierre directed: build the follow-ups (canonical protocol file, Hello tag-in, one baton path, CI) and plan Microsoft Copilot, OpenAI, and Codex as first-party participants, not spokes.
+
+### Technical Steerage
+- One `MEP.md`. Loaders point at it. Do not copy Hello/EOL into five identity files.
+- Default baton is `handoff.md` at repo root. `machines/handoff.md` is legacy.
+- Hello must write `Tag-out: [active]` so overlapping sessions are visible.
+- GitHub Copilot = Microsoft's git-writing coding agent. M365 Copilot is a standup reader.
+- OpenAI splits: Codex writes git via `AGENTS.md`. ChatGPT without git uses a seed prompt and one paste.
+
+### Machine Execution (Cursor)
+- `templates/MEP.md` plus thin loaders for Claude, Cursor, Copilot, Codex
+- ChatGPT `SEED_PROMPT.md`; Codex `.agents/skills` skill
+- `examples/first-party/`; checker `--ci`; GitHub Action
+- Spec Component 10 expanded; schema 1.2; MEP 2.6
+
