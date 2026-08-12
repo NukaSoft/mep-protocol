@@ -9,7 +9,7 @@ copyright: Copyright (C) 2026 Pierre Hulsebus / NukaSoft.AI
 
 # MEP Relay Skill
 
-Implements the Meat Puppet Elimination Protocol (MEP) handoff commands for Claude Code sessions.
+Implements the Meat Puppet Elimination Protocol (MEP) handoff commands for Claude Code sessions. Cursor is a peer writer of the same baton — see `skills/cursor/mep-relay/SKILL.md`.
 
 ---
 
@@ -17,49 +17,54 @@ Implements the Meat Puppet Elimination Protocol (MEP) handoff commands for Claud
 
 Execute at the beginning of any session.
 
-1. Run `git pull` to fetch the latest baton
-2. Read `handoff.md` — load the baton (newest entry is current state)
-3. Read `TASKS.md` — pick up the task queue
-4. Check today's journal: `daily/YYYY-MM-DD.md`
-5. Report to the human: what's loaded, what's pending (2–3 lines max, not a novel)
+1. `git fetch origin`
+2. Read `handoff.md` (or `machines/handoff.md`) — load the baton (newest entry is current state). If this branch is not the default branch, also read the baton from `origin/<default-branch>`.
+3. `git pull --ff-only` only when the working tree is clean and a fast-forward will not invent a merge.
+4. Read `TASKS.md` — pick up the task queue
+5. Check today's journal: `daily/YYYY-MM-DD.md`
+6. If the newest entry is still `Tag-out: [active]`, report that and do not rewrite it.
+7. Report to the human: what's loaded, what's pending (2–3 lines max, not a novel)
 
 **Output format:**
 ```
-Picked up from [date] — [machine].
+Picked up from [date] — [agent / runtime].
 Pending: [top 2-3 items].
-Today's journal: [exists / not started].
+Other runtime: [idle / tagged in / unknown].
 ```
 
 ---
 
 ## /mep end
 
-Execute at the end of any session. Triggered by EOL keywords: `/eol`, `p-out`, `ppp`, or natural phrases ("done", "wrap up", "heading out", "switching machines").
+Execute at the end of any session. Triggered by EOL keywords: `/eol`, `p-out`, `ppp`, or natural phrases ("wrap up", "heading out", "switching machines", "end of line").
 
-1. Write the handoff entry — newest entry on top, three sections:
+Do not treat the word `done` alone as EOL.
+
+1. Write the handoff entry — newest entry on top. Dual-runtime repos use the v2 header:
+   - `## YYYY-MM-DD — [Agent] | Claude Code | [session-type]`
+   - `**Tag-in:** HH:MM UTC | **Tag-out:** HH:MM UTC`
    - `### What happened` — concise bullet list of accomplishments
-   - `### What's pending` — checkbox list of open items, scope-tagged by owner
+   - `### What's pending` — checkbox list of open items, scope-tagged by owner (`[Cursor]`, `[Claude]`, `[human]`)
    - `### Watch out for` — optional, only if there are traps or stale state to flag
 2. Append to today's journal (`daily/YYYY-MM-DD.md`) — do not overwrite
 3. Stage: `git add handoff.md daily/YYYY-MM-DD.md`
-4. Commit: `git commit -m "EOL: [machine] — [one-line summary] — Stardate [YYYY.DDD]"`
-5. Push: `git push`
+4. Commit: `git commit -m "EOL: [machine] — [one-line summary]"`
+5. Push the current branch. Never force-push `main` or `master`.
 6. Confirm: **"End of Line."**
 
 ### Conflict Recovery (Autonomous)
 
 If push fails due to a merge conflict in `handoff.md`:
 
-1. Re-read both versions of `handoff.md` (local branch + remote main)
-2. Identify the structural rule from existing entries: **newest date on top, history preserved below**
-3. Diagnose the conflict: determine which entry is newer by date header
-4. Write the resolved file: newer entry at top, older entries intact below
-5. Stage the resolved file: `git add handoff.md`
-6. Rebase onto main: `git rebase origin/main`
-7. Force-push the branch: `git push --force-with-lease`
-8. Complete the EOL sequence
+1. Re-read both versions of `handoff.md` (local branch + the branch you are merging)
+2. Identify the structural rule from existing entries: **newest date on top, history preserved below**. Same calendar day: order by tag-out timestamp (`[active]` sorts first).
+3. Keep every agent's entry. Do not edit another agent's entry to win the merge.
+4. Write the resolved file, stage: `git add handoff.md`
+5. If you are on a branch this session created: rebase onto the target, then `git push --force-with-lease`.
+6. If you are on `main` / `master` / a shared branch: merge (no force-push), then push.
+7. Complete the EOL sequence
 
-**Do not escalate to the human.** The handoff file has sufficient structure for autonomous resolution. If the conflict cannot be resolved from structure alone, only then surface it.
+**Do not escalate to the human** unless two entries are incomparable (missing dates, or same-day times with no timezone) and you would have to delete one of them to proceed.
 
 ---
 
@@ -68,7 +73,7 @@ If push fails due to a merge conflict in `handoff.md`:
 Read the current `handoff.md` and summarize the last entry in 3–4 lines.
 
 ```
-Last session: [date] on [machine]
+Last session: [date] on [agent / runtime]
 Accomplished: [top 2 items]
 Pending: [top 2 items]
 Watch out: [if any]
@@ -81,7 +86,8 @@ Watch out: [if any]
 ```markdown
 # Handoff Log
 
-## YYYY-MM-DD — Machine Name (branch/context)   ← newest entry ALWAYS on top
+## YYYY-MM-DD — Agent | Runtime | session-type
+**Tag-in:** HH:MM UTC | **Tag-out:** HH:MM UTC
 
 ### What happened
 - Bullet list of accomplishments
@@ -95,7 +101,7 @@ Watch out: [if any]
 
 ---
 
-## YYYY-MM-DD — Previous Machine                ← older entries below
+## YYYY-MM-DD — Previous Agent | Runtime | session-type
 ...
 ```
 
@@ -104,5 +110,7 @@ Watch out: [if any]
 ## Installation
 
 Drop this file into `~/.claude/skills/mep-relay/SKILL.md` or symlink from your repo.
+
+For Cursor, install `skills/cursor/mep-relay/SKILL.md` and `templates/cursor-rules/mep.mdc`.
 
 No dependencies. No runtime. No server. Just Git and markdown.

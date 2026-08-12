@@ -10,7 +10,7 @@ MEP is a protocol specification, not a software library. Contributions are propo
 |------|----------|---------|
 | **Bug reports** | Handoff schema edge case, conformance test failure | Open an issue |
 | **Transport profiles** | Conformance evaluation for a new transport | PR to `spec/handoff-schema.md` |
-| **Skill ports** | MEP_RELAY for Cursor, Copilot, Gemini CLI | PR to `skills/` |
+| **Skill ports** | MEP_RELAY for Cursor (shipped), Copilot, Gemini CLI | PR to `skills/` |
 | **Example implementations** | Working MEP setup for a specific tech stack | PR to `examples/` |
 | **Protocol changes** | Changes to required fields, ordering rules, EOL behavior | RFC process (see below) |
 

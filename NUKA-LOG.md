@@ -207,3 +207,28 @@ Identified a handoff conflict that occurred when a Mac worktree session (DNS inf
 3. **Second confirmed autonomous resolution.** Entry 002 was the first. This is the second. The pattern is consistent: read the file, identify the newest entry by date, position correctly, merge.
 
 <!-- sync:2026-08-12T15:10:04-04:00 | Uhura | 13 understandings published -->
+
+---
+
+## Log Entry 006
+**Date:** 2026-08-12
+**Sprint:** Dual-Runtime Peers — Cursor + Claude
+
+### Strategic Intent (Pierre)
+Pierre directed a Cursor Cloud Agent to review the MEP protocol Claude authored, and to use the protocol on projects that involve both Cursor and Claude. The public spec was Claude-centric: identity was `CLAUDE.md`, the skill lived under `~/.claude/skills/`, and Cursor was not a first-class writer.
+
+### Technical Steerage
+- Cursor does not load `CLAUDE.md`. Self-enforcement on the Cursor side requires `AGENTS.md` plus an always-on `.cursor/rules/mep.mdc`.
+- Cursor is a peer writer (git access), not a spoke (conversation URL). Dual-runtime is a different problem than Grok/ChatGPT inbound.
+- Date-only newest-first fails when both runtimes work the same day. v2 timestamps with timezones are required.
+- `git push --force-with-lease` on conflict recovery is unsafe on the default branch when two runtimes share the repo.
+- The word `done` is not an EOL trigger in coding sessions.
+
+### Machine Execution (Cursor)
+- Repaired UTF-8 mojibake across protocol documents (corrupted em dashes, box drawing, BNF separator)
+- Added `templates/AGENTS.md`, `templates/cursor-rules/mep.mdc`, `skills/cursor/mep-relay/`
+- Added `examples/cursor-claude/` and `scripts/check-handoff.py`
+- Spec Component 10 (v2.5) and handoff schema 1.1
+- Moved the filled NukaSoft standup out of `templates/` into `examples/shared-surface/`
+- Removed leftover AGPL "network service" language from the README after the 2.4 relicense
+

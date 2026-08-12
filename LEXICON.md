@@ -73,7 +73,16 @@ The handoff file's structure isn't arbitrary. It's what makes autonomous conflic
 
 **The self-enforcing protocol bootstrap.**
 
-A markdown file (typically `CLAUDE.md`) at the repo root that the AI agent loads automatically at session start. The protocol instructions — including "read the handoff file" — are embedded directly in this file.
+A markdown file at the repo root that the AI agent loads automatically at session start. The protocol instructions — including "read the handoff file" — are embedded directly in this file.
+
+The filename is runtime-specific:
+
+| Runtime | Identity file |
+|---------|---------------|
+| Claude Code | `CLAUDE.md` |
+| Cursor (IDE, Cloud Agent, CLI) | `AGENTS.md` plus `.cursor/rules/mep.mdc` |
+
+A repo that both runtimes write needs both files, with identical Session Protocol sections. An identity file the runtime does not load is not self-enforcing.
 
 **Key insight:** The protocol is self-enforcing. No daemon, no server, no runtime. The agent reads its own instructions, which tell it to follow the protocol. The human doesn't have to remember to invoke anything.
 
@@ -93,12 +102,14 @@ The human's only job: open a session and start talking.
 
 **The session shutdown trigger.**
 
-When the human signals session end — via keyword (`/eol`, `p-out`, `ppp`) or natural language ("done", "heading out", "wrap up") — the agent executes the shutdown sequence:
+When the human signals session end — via keyword (`/eol`, `p-out`, `ppp`) or natural language ("heading out", "wrap up", "switching machines", "end of line") — the agent executes the shutdown sequence:
 
 1. Update the [handoff file](#handoff-file) with session context
 2. Log the session to the daily journal
 3. Commit and push
 4. Sign off: *"End of Line."*
+
+Do not treat the word `done` alone as EOL. Coding sessions say it constantly; that trigger is a false-positive, especially in dual-runtime repos.
 
 **Cultural reference:** "End of Line" — Tron (1982). The MCP's final words. Also: the terminating character in legacy terminal protocols. Both meanings apply.
 
@@ -357,6 +368,18 @@ Claude updates outbound baton → Peer reads updated context → ...
 ```
 
 The operator opens sessions and directs work.  Context flows automatically in both directions.  The meat puppet is eliminated at every layer.
+
+---
+
+## Dual-Runtime
+
+**A repo written by more than one coding agent that both have git access.**
+
+Cursor + Claude Code is the first instance. Both are peer writers of the same baton. This is distinct from cross-ecosystem spokes (Grok, ChatGPT, Gemini), which do not share the repo and return context through conversation URLs.
+
+Required: `CLAUDE.md` and `AGENTS.md` with identical Session Protocol sections, `.cursor/rules/mep.mdc`, v2 handoff headers with timezones, and no force-push to the default branch.
+
+**See also:** [Identity File](#identity-file), [Component 10](spec/mep-protocol.md#component-10-dual-runtime-peers-cursor--claude)
 
 ---
 

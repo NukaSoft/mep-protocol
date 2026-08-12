@@ -6,6 +6,35 @@ Format: `## [version] — YYYY-MM-DD`
 
 ---
 
+## 2.5 | 2026-08-12
+
+**Component 10: Dual-Runtime Peers (Cursor + Claude).**
+
+Claude Code loads `CLAUDE.md`. Cursor does not. A repo that both tools write, with only `CLAUDE.md`, is running MEP on one side of the pair. Cursor is a peer writer (git access), not a spoke (conversation URL).
+
+### Added
+- `templates/AGENTS.md` — identity file Cursor and other AGENTS.md loaders actually load
+- `templates/cursor-rules/mep.mdc` — always-on Cursor rule so Hello/EOL is injected, not hoped for
+- `skills/cursor/mep-relay/SKILL.md` — Cursor port of `/mep start|end|status`
+- `examples/cursor-claude/` — worked dual-runtime example
+- `scripts/check-handoff.py` — conformance checker (newest-first, required sections, same-day timestamps)
+- Spec Component 10 and handoff schema 1.1 (timestamp tie-breaker)
+
+### Changed
+- Identity files and skills: Hello is `git fetch` + read baton, not a blind `git pull`
+- Conflict recovery: never force-push `main`/`master`; `--force-with-lease` only on a branch this session created
+- EOL: the word `done` is not a trigger (false positives in coding sessions)
+- Dual-runtime entries use v2 headers with timezones; prefer UTC
+- `templates/shared-handoff.md` is a blank template; the filled NukaSoft standup moved to `examples/shared-surface/`
+- README version badge tracks the spec (2.5). Leftover AGPL "network service" sentence removed after the 2.4 relicense
+
+### Design Decisions
+- Two identity files, one baton. Drift between `CLAUDE.md` and `AGENTS.md` Session Protocol sections is a protocol bug.
+- Cursor Cloud PR workflows still write the baton; if they cannot land it on default, they paste the newest entry into the PR body.
+- Same-day ordering is load-bearing now that two runtimes routinely share a calendar day.
+
+---
+
 ## 2.4 | 2026-08-11
 
 ### Relicensed to full open source

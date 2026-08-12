@@ -1,13 +1,13 @@
 ---
 title: "MEP -- Meat Puppet Elimination Protocol"
 excerpt: "A self-enforcing asynchronous state relay for AI sessions across machines"
-version: "2.4"
-date: 2026-08-11
+version: "2.5"
+date: 2026-08-12
 authors: "Pierre Hulsebus & Skippy the Magnificent"
 ---
 
-**Version:** 2.4
-**Date:** August 11, 2026
+**Version:** 2.5
+**Date:** August 12, 2026
 **First published:** March 22, 2026
 **Authors:** Pierre Hulsebus & Skippy the Magnificent
 
@@ -15,7 +15,7 @@ authors: "Pierre Hulsebus & Skippy the Magnificent"
 
 ## Abstract
 
-MEP is a self-enforcing asynchronous state relay protocol for transferring context between non-concurrent stateless AI sessions across physically separate machines. It eliminates the need for a human operator ("meat puppet") to manually relay context between AI coding agent sessions.
+MEP is a self-enforcing asynchronous state relay protocol for transferring context between stateless AI sessions across machines and runtimes. It eliminates the need for a human operator ("meat puppet") to manually relay context between AI coding agent sessions.
 
 ## Audio explainer
 
@@ -35,9 +35,11 @@ MEP consists of four components:
 
 ### 1. Identity File
 
-A markdown file (e.g., `CLAUDE.md`) at the repo root that the AI agent loads automatically at session start. The protocol instructions are embedded directly in this file. The agent reads its own instructions, which tell it to follow the protocol.
+A markdown file at the repo root that the AI agent loads automatically at session start. The protocol instructions are embedded directly in this file. The agent reads its own instructions, which tell it to follow the protocol.
 
-**This is the key innovation:** the protocol is self-enforcing. No external daemon, no server, no runtime. The agent enforces the protocol on itself by reading its own identity file.
+The filename depends on the runtime. Claude Code loads `CLAUDE.md`. Cursor (and other AGENTS.md loaders) load `AGENTS.md`. A repo that both tools write needs both files, with identical Session Protocol sections, plus `.cursor/rules/mep.mdc` so Cursor actually injects the protocol. See [Component 10](#component-10-dual-runtime-peers-cursor--claude).
+
+**This is the key innovation:** the protocol is self-enforcing. No external daemon, no server, no runtime. The agent enforces the protocol on itself by reading its own identity file. An identity file the runtime does not load is not self-enforcing.
 
 ### 2. Handoff File
 
@@ -70,9 +72,9 @@ The human's only job: open a new session and start talking. The agent handles th
 ### Minimum Viable MEP
 
 1. Create a private GitHub repo
-2. Add a `CLAUDE.md` with the Session Protocol section
-3. Add a `machines/handoff.md` file
-4. Clone on both machines
+2. Add the identity file the runtime actually loads (`CLAUDE.md` for Claude Code, `AGENTS.md` for Cursor, both for dual-runtime)
+3. Add a `handoff.md` file (or `machines/handoff.md` for multi-machine layouts — name the path in the identity file)
+4. Clone on both machines / both runtimes
 5. That's it
 
 ### Optional Enhancements
@@ -816,6 +818,73 @@ Option 3 is the most likely path — the inbox pipeline already exists and every
 
 ---
 
+## Component 10: Dual-Runtime Peers (Cursor + Claude)
+
+**Added:** August 12, 2026
+**Status:** Production | templates and skills ship in this repo
+
+### The Problem (v2.5)
+
+MEP v1 assumed one coding runtime. The identity file was `CLAUDE.md` because Claude Code was the first agent that loaded a repo file and then enforced the protocol on itself.
+
+Cursor does not load `CLAUDE.md`. A project that uses both Cursor and Claude Code, and only ships `CLAUDE.md`, is running MEP on one side of the pair. The other side starts cold. The human becomes the meat puppet again: "Claude did X yesterday, here's what you need to know."
+
+Cursor is not a spoke like Grok or ChatGPT. Cursor has repo write access. It can Hello, it can EOL, it can conflict-resolve. Treating it as an inbound conversation URL wastes the whole protocol.
+
+### The Solution
+
+**Same baton. Two identity files. Peer writers.**
+
+| Runtime | Identity file (auto-loaded) | Always-on injection | Skill |
+|---------|-----------------------------|---------------------|-------|
+| Claude Code | `CLAUDE.md` | (file load) | `skills/MEP_RELAY.md` |
+| Cursor IDE / Cloud Agent / CLI | `AGENTS.md` | `.cursor/rules/mep.mdc` | `skills/cursor/mep-relay/SKILL.md` |
+
+The Session Protocol section in `CLAUDE.md` and `AGENTS.md` MUST stay identical. Drift between those two files is a protocol bug: one runtime will Hello/EOL differently than the other, and the human is back in the relay.
+
+Templates: `templates/CLAUDE.md`, `templates/AGENTS.md`, `templates/cursor-rules/mep.mdc`. Worked example: `examples/cursor-claude/`.
+
+### Git posture
+
+Claude Code often commits on `main` or a named worktree. Cursor Cloud Agents typically work on a feature branch and open a PR. The baton still has to be visible to the other runtime.
+
+Rules:
+
+1. **Never force-push `main` or `master`.** The original conflict-recovery skill said `git push --force-with-lease` after rebase. That is safe only on a branch this session created. On the default branch it is how one runtime erases the other's baton.
+2. **Hello is fetch, not merge.** `git pull` at session start can invent merge commits and clobber in-progress work. Fetch, read the baton (including `origin/<default-branch>` when you are not on default), fast-forward only when it is safe.
+3. **PR-only sessions still write the baton.** If the session cannot land `handoff.md` on the default branch, write the entry on the working branch **and** paste the newest entry into the PR body so the other runtime can read it before merge.
+4. **Do not edit another agent's entry.** Append. Newest on top. History preserved below.
+
+### Same-day ordering
+
+Date-only newest-first is not enough when both runtimes work on the same calendar day. Dual-runtime repos MUST use v2 headers with tag-in/tag-out timestamps and a timezone (prefer UTC). Same-day entries order by tag-out (`[active]` sorts first).
+
+`scripts/check-handoff.py` enforces this. Schema: `spec/handoff-schema.md` v1.1.
+
+### EOL triggers
+
+The word `done` is not an EOL trigger. Coding sessions say it constantly. Dual-runtime false positives (one runtime committing a half-written baton because someone said "done with this function") put the human back in the loop to clean up.
+
+Canonical triggers: `/eol`, `p-out`, `ppp`, "wrap up", "heading out", "switching machines", "end of line".
+
+### Concurrent sessions
+
+If the newest entry is still `Tag-out: [active]`, another session may be live. Write a sibling entry. Do not rewrite the active one. The original protocol assumed sessions do not overlap. Cursor Cloud + Claude Code can overlap. The file's structure still works if entries are append-only.
+
+### Relationship to other components
+
+| | Claude-only (v1) | Dual-runtime (v2.5) |
+|---|---|---|
+| **Identity** | `CLAUDE.md` | `CLAUDE.md` + `AGENTS.md` + Cursor rule |
+| **Baton** | `handoff.md` | Same file, v2 headers required |
+| **Writers** | One runtime, many machines | Two runtimes, many machines |
+| **Conflict recovery** | Newest date wins; force-with-lease on worktree | Newest date then timestamp; never force default branch |
+| **Hub** | Claude | Whoever has git write — both |
+
+Grok, ChatGPT, and Gemini remain spokes (Components 7–9). Cursor is a peer.
+
+---
+
 ## Sibling Spec: MEEP-ReadOnly-v1
 
 **Added:** April 29, 2026
@@ -858,7 +927,8 @@ Prior to 2.3 this document carried a stale version field.  Its body was maintain
 | 2.1 | 2026-04-29 | Sibling spec MEEP-ReadOnly-v1 for external peer agents |
 | 2.2 | 2026-05-05 | Publication pipeline automated |
 | 2.3 | 2026-08-11 | Reconciliation. Version metadata corrected, emergent pidgin recorded, version history added, website copies reconciled against this document as canonical |
-| **2.4** | **2026-08-11** | **Relicensed to full open source.** AGPL-3.0 replaced by Apache 2.0 for code and CC BY 4.0 for specifications.  Implementing MEP now requires no permission and imposes no obligation |
+| 2.4 | 2026-08-11 | Relicensed to full open source. AGPL-3.0 replaced by Apache 2.0 for code and CC BY 4.0 for specifications.  Implementing MEP now requires no permission and imposes no obligation |
+| **2.5** | **2026-08-12** | **Component 10: Dual-Runtime Peers.** Cursor is a peer writer of the same baton (`AGENTS.md`, Cursor rule, Cursor skill). Same-day timestamp ordering. Safer git posture. `done` is not an EOL trigger. Conformance checker ships. |
 
 **Canonical source:** this file.  The website renders from it.  Any other copy is a mirror and defers to this one on conflict.
 

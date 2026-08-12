@@ -1,7 +1,7 @@
 # MEP Handoff Schema — Formal Specification
 
-**Version:** 1.0
-**Date:** 2026-03-22
+**Version:** 1.1
+**Date:** 2026-08-12
 **License:** CC BY 4.0 | Copyright 2026 Pierre Hulsebus / NukaSoft.AI
 
 ---
@@ -42,6 +42,10 @@ newline         ::= "\n"
 ## Ordering Rule
 
 **Entries MUST be ordered newest-first.** The most recent entry appears at the top of the file. This is not a convention — it is a protocol requirement. The autonomous conflict resolution capability of MEP depends on this ordering being machine-parseable.
+
+**Date is the primary key. Timestamp is the tie-breaker.** Two entries on the same `YYYY-MM-DD` MUST be ordered by tag-out time, newest first. `[active]` sorts above any completed tag-out. Dual-runtime repos (Cursor + Claude) produce same-day pairs as a matter of course; date-only ordering is not sufficient there.
+
+Timestamps MUST include a timezone. Prefer UTC. `scripts/check-handoff.py` enforces date order and same-day timestamp order.
 
 ```
 ## 2026-04-03 — Hot Rod (main)        ← newest, read first
@@ -137,6 +141,9 @@ A conformant handoff file passes all of the following checks:
 3. Every entry contains at minimum `### What happened` and `### What's pending` sections
 4. No entry is missing a `## YYYY-MM-DD` date header
 5. Task items under `### What's pending` use `- [ ]` checkbox format
+6. Same-day entries with v2 timestamps are ordered by tag-out, newest first
+
+Run: `python3 scripts/check-handoff.py path/to/handoff.md`
 
 A conformant MEP implementation passes the autonomous merge test:
 
@@ -177,7 +184,7 @@ date-header     ::= "## " ISO-DATE " — " agent-context
 agent-context   ::= agent-name " | " platform " | " session-type
 
 agent-name      ::= text                    # "Skippy" | "Grok" | "ChatGPT" | "Pierre"
-platform        ::= text                    # "Claude (Hot Rod)" | "Grok (X)" | "ChatGPT" | "Gemini"
+platform        ::= text                    # "Claude Code" | "Cursor (Cloud)" | "Cursor (IDE)" | "Grok (X)" | "ChatGPT" | "Gemini"
 session-type    ::= text                    # "code" | "cowork" | "brainstorm" | "research"
 
 agent-tag       ::= "**Tag-in:** " timestamp " | " "**Tag-out:** " timestamp
@@ -204,6 +211,16 @@ agent-tag       ::= "**Tag-in:** " timestamp " | " "**Tag-out:** " timestamp
 ```markdown
 ## 2026-04-13 — ChatGPT | ChatGPT | research
 **Tag-in:** 10:00 ET | **Tag-out:** 10:45 ET
+```
+
+```markdown
+## 2026-08-12 — Cursor | Cursor (Cloud) | code
+**Tag-in:** 19:56 UTC | **Tag-out:** 21:10 UTC
+```
+
+```markdown
+## 2026-08-12 — Skippy | Claude Code | code
+**Tag-in:** 15:10 UTC | **Tag-out:** 17:00 UTC
 ```
 
 ```markdown
@@ -264,9 +281,10 @@ When the handoff file lives on a shared surface (Google Drive) accessible to all
 
 The handoff schema is the SAME for:
 - Machine-to-machine (Claude Hot Rod → Claude Mac)
+- Runtime-to-runtime (Cursor Cloud → Claude Code)
 - LLM-to-LLM (Grok → Claude → ChatGPT)
-- Shared surface (Google Drive read by all)
-- Internal repo (machines/handoff.md)
+- Shared surface (Google Drive / HTTPS standup read by all)
+- Internal repo (`handoff.md` or `machines/handoff.md`)
 
 The only difference is the header — v2 adds agent name, platform, and session type.  The three sections (happened, pending, watch out) are identical.  The ordering rule (newest first) is identical.  The conformance tests are identical.
 

@@ -3,7 +3,7 @@
 **Meat Puppet Elimination Protocol** — a self-enforcing asynchronous state relay for AI sessions across machines.
 
 [![Code: Apache 2.0](https://img.shields.io/badge/Code-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0) [![Docs: CC BY 4.0](https://img.shields.io/badge/Docs-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![MEP Version](https://img.shields.io/badge/MEP-v1.0-green.svg)](spec/mep-protocol.md)
+[![MEP Version](https://img.shields.io/badge/MEP-v2.5-green.svg)](spec/mep-protocol.md)
 [![Status: Production](https://img.shields.io/badge/Status-Production%20Proven-brightgreen.svg)](spec/mep-protocol.md#milestone-first-autonomous-ci-recovery)
 
 ---
@@ -20,7 +20,7 @@ MEP eliminates you from the relay loop. Four components:
 
 | Component | What It Does |
 |-----------|-------------|
-| **Identity File** (`CLAUDE.md`) | Loads automatically. Self-enforces the protocol. The agent reads its own instructions. |
+| **Identity File** (`CLAUDE.md` / `AGENTS.md`) | Loads automatically for that runtime. Self-enforces the protocol. Cursor also needs `.cursor/rules/mep.mdc`. |
 | **Handoff File** (`handoff.md`) | Carries curated context between sessions. Structured, newest-first. The baton. |
 | **Transport Layer** (Git) | Versioned, encrypted, conflict-resolution built in. Enterprise-grade security. Zero management. |
 | **Self-Enforcement** | No human action required. The agent reads, follows, and executes the protocol on itself. |
@@ -51,6 +51,23 @@ claude
 ```
 
 That's it. The protocol is active.
+
+### Cursor + Claude (dual-runtime)
+
+If both Cursor and Claude Code write the repo, one identity file is not enough. Cursor does not load `CLAUDE.md`. Copy both, plus the Cursor rule, and keep the Session Protocol sections identical:
+
+```bash
+cp path/to/mep-protocol/templates/CLAUDE.md .
+cp path/to/mep-protocol/templates/AGENTS.md .
+cp path/to/mep-protocol/templates/handoff.md handoff.md
+mkdir -p .cursor/rules .cursor/skills/mep-relay
+cp path/to/mep-protocol/templates/cursor-rules/mep.mdc .cursor/rules/mep.mdc
+cp path/to/mep-protocol/skills/cursor/mep-relay/SKILL.md .cursor/skills/mep-relay/SKILL.md
+```
+
+Worked example: [`examples/cursor-claude/`](examples/cursor-claude/). Spec: [Component 10](spec/mep-protocol.md#component-10-dual-runtime-peers-cursor--claude).
+
+Validate a baton with `python3 scripts/check-handoff.py handoff.md`.
 
 ---
 
@@ -112,13 +129,22 @@ mep-protocol/
 │   ├── handoff-schema.md      BNF grammar + conformance tests
 │   └── meep-readonly-v1.md    Read-only peer-agent context surface (sibling spec)
 ├── templates/
-│   ├── CLAUDE.md              Drop-in session protocol template
+│   ├── CLAUDE.md              Claude Code identity + session protocol
+│   ├── AGENTS.md              Cursor / AGENTS.md identity + session protocol
+│   ├── cursor-rules/mep.mdc   Always-on Cursor rule
 │   ├── handoff.md             Blank baton template
+│   ├── shared-handoff.md      Blank Standing Standup template
 │   └── NUKA-LOG.md            Blank authorship log template
 ├── skills/
-│   └── MEP_RELAY.md           Claude Code skill (/mep start|end|status)
+│   ├── MEP_RELAY.md           Claude Code skill (/mep start|end|status)
+│   └── cursor/mep-relay/      Cursor skill (same commands)
+├── scripts/
+│   └── check-handoff.py       Handoff conformance checker
+├── tests/handoff/             Checker fixtures
 └── examples/
-    └── minimal/               Bare-bones working example
+    ├── minimal/               Bare-bones Claude-only example
+    ├── cursor-claude/         Dual-runtime (Cursor + Claude) example
+    └── shared-surface/        Filled Standing Standup example
 ```
 
 ---
@@ -142,9 +168,7 @@ Copyright 2026 Pierre Hulsebus / NukaSoft.AI.
 
 Implementing MEP requires no permission and imposes no obligation.  Attribution is required when you copy or adapt the documents themselves.  A protocol is only worth writing if people can build on it.
 
-Use it. Build on it. If you distribute a modified version — especially as a network service — your modifications must remain open.
-
-Eliminate your own meat puppet.
+Use it. Build on it. Eliminate your own meat puppet.
 
 ---
 
