@@ -1,8 +1,8 @@
-﻿# MEP Protocol â€” Changelog
+# MEP Protocol — Changelog
 
 All notable changes to the MEP Protocol are documented here.
 
-Format: `## [version] â€” YYYY-MM-DD`
+Format: `## [version] — YYYY-MM-DD`
 
 ---
 
@@ -29,7 +29,7 @@ required only when copying or adapting the documents themselves.
 Sole copyright holder, so no contributor consent was required. Verified against
 both the private history and the public repository before relicensing.
 
-## [MEEP-ReadOnly-v1] â€” 2026-04-29
+## [MEEP-ReadOnly-v1] — 2026-04-29
 
 **Read-only peer-agent context surface.**
 
@@ -48,7 +48,7 @@ both the private history and the public repository before relicensing.
 
 ---
 
-## [2.2] â€” 2026-04-15
+## [2.2] — 2026-04-15
 
 **Public Relay Automation + Exploration Archive**
 

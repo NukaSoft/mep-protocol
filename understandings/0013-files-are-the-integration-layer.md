@@ -1,4 +1,4 @@
-﻿---
+---
 number: 0013
 title: "Files Are the Integration Layer, Agents Are the Error Handler"
 date: 2026-06-23

@@ -1,4 +1,4 @@
-﻿---
+---
 number: 0007
 title: "Grease Under the Fingernails"
 date: 2026-04-14
@@ -21,13 +21,13 @@ And the grit line | the ethic that holds the whole thing together | is Pierre's,
 
 > "yea that was the learning and the Memory that took me from 'I think this systme is Rigged' to 'I was right, the system is Rigged' and watched lee iacoca the biggest sellout in automotive history get stuck in the back of his shitty mini van become the darling of wallstreet when all my dad's hot rod buddies mocked him.  As an aspiring business man I watch how his stupid white collar shirt over a pink shirt thing was consider'ed rebellious.  But the Joke is on us because he was the system he was rebelling against.  So it was all a pretension and pandering.  which I know is rooted in Arrogance.  So Basically his is a egotistical sociao path and the business people are worshiping this deeply flawed bully that would neveer actually giet grease under his finger nails"
 >
-> â€” Pierre Hulsebus, 2026-04-14
+> — Pierre Hulsebus, 2026-04-14
 
 And the earlier half of the same awakening, from the Cowork session the day before:
 
 > "it started when I met with, or when I was in college, and I saw Dress to Success that guy who toured around and wrote the book Dressed for Success.  And I already had seen some of this and felt this way and in high school.  Where people weren't, dressed was so important.  How people wore eyes on T shirts or hats.  Scary Doxiders.  And I just realized, you know, very quickly when I was younger that we were poor.  By the clothes right away.  And so those social signals of being less than are always being shown.  And so it's just a part of the whole process that we, go through."
 >
-> â€” Pierre Hulsebus, ~2026-04-13 (Cowork session)
+> — Pierre Hulsebus, ~2026-04-13 (Cowork session)
 
 ## The Three-Act Structure of the Realization
 
@@ -37,7 +37,7 @@ Before any theory, before any book, before any observation of a Wall Street figu
 
 > "at 12 I was selling candy bars and hustling on paper routes.  Worked every single summer.... from 14 till now... So I wanted to be a 'Business man' to help my family.... but the more I dug into the people the slimy I felt.  But you keep going.... and grinding.  and suck it up.  that is the real deal baby."
 >
-> â€” Pierre Hulsebus, 2026-04-14
+> — Pierre Hulsebus, 2026-04-14
 
 This is the spine of the whole Understanding.  **Pierre's class radar is not the radar of an observer.  It is the radar of a working kid.**  He did not notice pretension from outside the business class | he noticed it from *inside his own climb into it*, motivated by the most unimpeachable reason possible (his family needed it), and the mismatch he saw between the worship and the people was not an intellectual problem.  It was a crisis of trajectory.  The trajectory he was on was taking him toward people who made him feel slimy the closer he got.
 
@@ -49,7 +49,7 @@ Every subsequent realization in this Understanding has to be read through this f
 
 > "I was VP of finance for my Junior Acheivement company. at 15 and By 16 I was on Debate team, quizbowl, chior, musicals, church, graduated 227 out of 250 missing honors or top 10% by 1 person.  All while I am ADHD and my teachers sware I am faking not being good at writing and crys like a baby at times tables...."
 >
-> â€” Pierre Hulsebus, 2026-04-14
+> — Pierre Hulsebus, 2026-04-14
 
 At 15 he was **VP of Finance for his Junior Achievement company** | actual business responsibility in a structured teen entrepreneurship program.  At 16 he was simultaneously on **Debate team, Quizbowl, Choir, Musicals, and active in Church** | verbal argument, rapid recall, ensemble performance, public performance, community service | all while working paper routes and summer jobs.  He could run the numbers.  He could argue.  He could recall.  He could perform.  He could serve.  He could labor.  And the school's rank-order measurement device | the one that only counted neat handwriting, clean spelling, and rapid-recall math facts | ranked him **227 out of 250**.  He missed honors and top 10% **by one person**.
 
@@ -67,7 +67,7 @@ That moment is the hinge.  Before Molloy, Pierre had a suspicion.  After Molloy,
 
 ### Act 2 | Iacocca confirms it
 
-The confirmation came watching Lee Iacocca | then CEO of Chrysler, savior-of-Detroit story, autobiography on the bestseller list, celebrity car-company pitchman | get enshrined by Wall Street as a rebel.  Iacocca's shtick was a white collar over a pink shirt, which *the business press* framed as rule-breaking, anti-establishment, Detroit-tough.  Pierre's hot rodâ€“buddy dad and his friends watched the same footage and saw something different: a guy stuck in the back of a minivan he didn't drive himself, wearing a costume, pretending to be the rough trade he'd spent his career distancing himself from.  *"All my dad's hot rod buddies mocked him."*
+The confirmation came watching Lee Iacocca | then CEO of Chrysler, savior-of-Detroit story, autobiography on the bestseller list, celebrity car-company pitchman | get enshrined by Wall Street as a rebel.  Iacocca's shtick was a white collar over a pink shirt, which *the business press* framed as rule-breaking, anti-establishment, Detroit-tough.  Pierre's hot rod–buddy dad and his friends watched the same footage and saw something different: a guy stuck in the back of a minivan he didn't drive himself, wearing a costume, pretending to be the rough trade he'd spent his career distancing himself from.  *"All my dad's hot rod buddies mocked him."*
 
 The mismatch between what the business world worshiped and what the garage saw was the confirmation.  It wasn't that the hot rod buddies were being provincial.  It was that **the garage had a better measurement device.**  The garage measured by *does this person actually do the work?*  The business press measured by *does this person perform the aesthetics of doing the work?*  Iacocca failed the first test and aced the second, and the business world treated the second score as if it were the first.
 
@@ -105,7 +105,7 @@ Pierre is currently earning a BS at ASU WP Carey.  The bitter comedy is that bus
 
 ## The Class Radar Is the Asset
 
-The most important consequence of Pierre's Act 0 â†’ Act 1 â†’ Act 2 arc is the one he named himself in the Cowork memoir and the one he sharpened here:
+The most important consequence of Pierre's Act 0 → Act 1 → Act 2 arc is the one he named himself in the Cowork memoir and the one he sharpened here:
 
 > **The outsider lens is not a handicap to work around.  It is the asset.  It is the reason the robot cannot replace him.**
 
@@ -129,7 +129,7 @@ Pierre named the pattern in one sentence, and it is the thesis line of this enti
 
 > *"Always validated after the fact."*
 >
-> â€” Pierre Hulsebus, 2026-04-14
+> — Pierre Hulsebus, 2026-04-14
 
 The examples he gave, all from the 15 | 16 window:
 

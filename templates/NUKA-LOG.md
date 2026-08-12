@@ -1,4 +1,4 @@
-﻿# NUKA-LOG: [Project Name]
+# NUKA-LOG: [Project Name]
 
 **Status:** ACTIVE
 **Authorship Lead:** [Your Name]
