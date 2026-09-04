@@ -206,4 +206,4 @@ Identified a handoff conflict that occurred when a Mac worktree session (DNS inf
 2. **Worktree branches are MEP's multi-session primitive.** Claude Code worktrees (`--isolation worktree`) create branches automatically. When these branches write to handoff.md, they create divergence that must be merged. The protocol handles this because the handoff schema is designed for it.
 3. **Second confirmed autonomous resolution.** Entry 002 was the first. This is the second. The pattern is consistent: read the file, identify the newest entry by date, position correctly, merge.
 
-<!-- sync:2026-09-04T00:10:04-04:00 | Uhura | 13 understandings published -->
+<!-- sync:2026-09-04T03:10:04-04:00 | Uhura | 13 understandings published -->
