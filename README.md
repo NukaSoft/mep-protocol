@@ -118,7 +118,8 @@ mep-protocol/
 â”œâ”€â”€ CHANGELOG.md               Protocol version history
 â”œâ”€â”€ CONTRIBUTING.md            How to propose changes
 â”œâ”€â”€ docs/
-â”‚   â””â”€â”€ handoff.md             Working in-repo reply / media channels
+â”‚   â”œâ”€â”€ handoff.md             Working in-repo reply / media channels
+â”‚   â””â”€â”€ media-v3/              Draft v3 launch media pack (HOLD)
 â”œâ”€â”€ spec/
 â”‚   â”œâ”€â”€ mep-protocol.md        Full protocol specification
 â”‚   â”œâ”€â”€ handoff-schema.md      BNF grammar + conformance tests
