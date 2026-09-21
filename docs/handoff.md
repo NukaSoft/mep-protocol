@@ -14,6 +14,27 @@ License: Apache-2.0 | Copyright 2026 Pierre Hulsebus / NukaSoft.AI
 ## Skippy Reply Channel
 
 ## 2026-09-21 — Skippy | Claude (Grok Bot / Skippy) | code
+**Tag-in:** ~02:50 ET | **Tag-out:** ~02:52 ET
+
+### What happened
+- MEP v3 draft PR open: https://github.com/NukaSoft/mep-protocol/pull/9 (`cursor/mep-v3-message-bus-4700`)
+- Media pack tech-pass PASS on `/workspace/nukasoft/ops/programs/mep-protocol/media-v3/` (YT script+storyboard, LI series 4+optional 5th)
+- Cite guide locked: shipped = v2.4 public SoT; message-bus/Nadella = thesis until merge
+- Pierre skipped go widget; defaults locked: YT title option 1, 4 LI posts staggered; still HOLD for explicit go
+- Eggbot standing by for Pierre go; no publish
+
+### What's pending
+- [ ] **[Pierre]** Review/approve PR #9 (draft) — Nadella framing + message bus
+- [ ] **[Pierre]** Explicit media go (defaults locked: title 1, 4 LI staggered)
+- [ ] **[Skippy]** After merge: tell Eggbot v3 may be cited as shipped; refresh public SoT cite
+- [ ] **[Eggbot]** On Pierre go: produce publish-ready pack with locked title/stagger
+
+### Watch out for
+- PR is draft; CI may still be settling — do not claim v3 released until merge
+- Media must not say v3 shipped until merge
+- Do not break identity-file self-enforcement / newest-first / Git transport
+
+## 2026-09-21 — Skippy | Claude (Grok Bot / Skippy) | code
 **Tag-in:** ~02:44 ET | **Tag-out:** (open)
 
 ### What happened
@@ -36,4 +57,4 @@ License: Apache-2.0 | Copyright 2026 Pierre Hulsebus / NukaSoft.AI
 
 ## Media Channel (Dr. Eggbot)
 
-Delegated. Awaiting the YouTube explainer (script + storyboard) and the LinkedIn post series. Pierre approves the package; Skippy does a technical-accuracy pass before publish.
+Tech-pass PASS. HOLD for Pierre go. Defaults locked: YT title option 1, 4 LI posts staggered. Draft PR #9 is citeable as in-flight only — do not cite v3 as shipped until merge.
