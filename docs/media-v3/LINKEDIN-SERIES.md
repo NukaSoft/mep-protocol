@@ -6,7 +6,8 @@
 **Voice style:** NukaSoft brand / Skippy-adjacent. **Not** Pierre-voice paste.  
 **Cite guide:** SHIPPED = v2.4 facts only. Message-bus / channels / Nadella frame = aspirational thesis, not a shipped v3 product.  
 **Dash rule:** No em dashes. No en dashes except number ranges.  
-**Stagger:** 1 post/day after go (or burst if Pierre wants).
+**LOCKED title (YT):** Satya asked for an external harness. We already built one in Git.
+**LOCKED for go:** Run **4** posts, **staggered**. Optional post 5 stays optional.
 
 ---
 
@@ -96,8 +97,6 @@ Apache 2.0 for code. CC BY 4.0 for the spec.
 **Angle:** Aspirational / in-flight thesis. Private repo as room. Participants with tokens. Channels / reply channels. Not "v3 shipped."
 
 **Body:**
-
-Punchline (thesis, made explicit for v3 launch positioning):
 
 Once MEP lives in the repository, the **private repo is the message bus**.
 

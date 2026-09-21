@@ -1,6 +1,6 @@
 # MEP Protocol · v3 launch media (grounded in v2.4 SoT)
 
-**Status:** TECH-PASS **PASS** (Skippy 2026-09-21 ~02:50 ET). HOLD for Pierre go.  
+**Status:** TECH-PASS **PASS** (Skippy) · Tiro spoken-delivery **CONDITIONAL PASS** (folded 2026-09-21). HOLD for Pierre go.  
 **Do not publish. Do not schedule. Do not post.**  
 **Created:** 2026-09-21 (ET)  
 **LinkedIn series:** TECH-PASS PASS  
@@ -8,6 +8,13 @@
 **Owner (draft):** Dr Eggbot executor pack  
 **Go path:** ~~Skippy tech-pass~~ → **Pierre go** → Rita/Skippy publish  
 **Priority hand:** Skippy id `85898299-b831-413c-92dc-126f6be1f1d6`
+
+
+### Tiro spoken-delivery notes (2026-09-21)
+- Verdict: CONDITIONAL PASS. Canonical recording VO: `YOUTUBE-EXPLAINER-SCRIPT.md` (from TIRO-PASS). Pre-pass archive: `YOUTUBE-EXPLAINER-SCRIPT-PRE-TIRO.md`.
+- Key VO: shorter Act 3 breaths; speak “MEP. Meat Puppet Elimination Protocol.” (no pipes); Act 1 meta replaced with message-bus reading line; voice lock three clean lines end Act 4.
+- LI: drop Post 4 “Punchline (thesis…)” publish label. Pierre-voice Owned Voice: out of scope.
+- Storyboard: NADSELLA → NADELLA fixed.
 
 ### Skippy tech-pass notes
 - Cite guide correct: shipped = v2.4 only; message-bus / channels / Nadella frame = thesis.

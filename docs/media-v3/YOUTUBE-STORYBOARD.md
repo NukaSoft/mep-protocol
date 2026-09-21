@@ -66,4 +66,4 @@
 - Type: Abril Fatface feel; few words; high contrast.  
 - Audio: analog hum; Git clicks; widen room tone under punchline.  
 - Chapters: Hook / Problem / Shipped on Git / Message bus / What's next / CTA.  
-- Thumbnail: `NADSELLA NAMED THE GAP` or `THE REPO IS THE ROOM` (Pierre pick).
+- Thumbnail: `NADELLA NAMED THE GAP` or `THE REPO IS THE ROOM` (Pierre pick).
