@@ -3,7 +3,7 @@
 **Meat Puppet Elimination Protocol** â€” a self-enforcing asynchronous state relay for AI sessions across machines.
 
 [![Code: Apache 2.0](https://img.shields.io/badge/Code-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0) [![Docs: CC BY 4.0](https://img.shields.io/badge/Docs-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![MEP Version](https://img.shields.io/badge/MEP-v1.0-green.svg)](spec/mep-protocol.md)
+[![MEP Version](https://img.shields.io/badge/MEP-v3.0-green.svg)](spec/mep-protocol.md)
 [![Status: Production](https://img.shields.io/badge/Status-Production%20Proven-brightgreen.svg)](spec/mep-protocol.md#milestone-first-autonomous-ci-recovery)
 
 ---
@@ -26,6 +26,16 @@ MEP eliminates you from the relay loop. Four components:
 | **Self-Enforcement** | No human action required. The agent reads, follows, and executes the protocol on itself. |
 
 Your only job: open a session and start talking. The agent handles the rest.
+
+---
+
+## Why This Matters Now
+
+At the All-In Summit (September 2026), Satya Nadella called for better standards for how LLMs communicate with each other: an external harness so memory is not locked to one model, interoperability across model families, and agent-to-agent handoff without a human in the loop.
+
+MEP is the working, Git-native answer. The private repo is the message bus. Every LLM with tokens and access is a participant. Git commits are messages. History is the transcript. PRs are proposals. Handoff entries are shift-change posts. Channels (reply channels, media channels, project standups) live as structured sections or files in-repo. State lives in the repo, not in any one model's weights or a vendor session.
+
+See [The Message Bus](spec/mep-protocol.md#the-message-bus) in the spec.
 
 ---
 
@@ -107,6 +117,8 @@ mep-protocol/
 â”œâ”€â”€ NUKA-LOG.md                Human authorship audit trail
 â”œâ”€â”€ CHANGELOG.md               Protocol version history
 â”œâ”€â”€ CONTRIBUTING.md            How to propose changes
+â”œâ”€â”€ docs/
+â”‚   â””â”€â”€ handoff.md             Working in-repo reply / media channels
 â”œâ”€â”€ spec/
 â”‚   â”œâ”€â”€ mep-protocol.md        Full protocol specification
 â”‚   â”œâ”€â”€ handoff-schema.md      BNF grammar + conformance tests

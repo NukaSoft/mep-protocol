@@ -1,13 +1,13 @@
 ---
 title: "MEP -- Meat Puppet Elimination Protocol"
 excerpt: "A self-enforcing asynchronous state relay for AI sessions across machines"
-version: "2.4"
-date: 2026-08-11
+version: "3.0"
+date: 2026-09-21
 authors: "Pierre Hulsebus & Skippy the Magnificent"
 ---
 
-**Version:** 2.4
-**Date:** August 11, 2026
+**Version:** 3.0
+**Date:** September 21, 2026
 **First published:** March 22, 2026
 **Authors:** Pierre Hulsebus & Skippy the Magnificent
 
@@ -16,6 +16,14 @@ authors: "Pierre Hulsebus & Skippy the Magnificent"
 ## Abstract
 
 MEP is a self-enforcing asynchronous state relay protocol for transferring context between non-concurrent stateless AI sessions across physically separate machines. It eliminates the need for a human operator ("meat puppet") to manually relay context between AI coding agent sessions.
+
+## Motivation
+
+At the All-In Summit in September 2026, Satya Nadella called for better standards for how LLMs communicate with each other. The ask, paraphrased: an external harness so memory is not tied to one model; interoperability across model families; and a way for agents to hand off state without a human in the loop.
+
+MEP is the working, Git-native answer to that gap. The repository is the external harness. State lives in files, not in any one model's weights or a vendor session. Any LLM with tokens and repo access is a participant. Handoffs are shift-change posts, not human-relayed summaries.
+
+This version names that model. It does not replace Components 1 through 9. It does not invent a parallel architecture.
 
 ## Audio explainer
 
@@ -89,6 +97,38 @@ The human's only job: open a new session and start talking. The agent handles th
 3. **Asynchronous.** Sessions don't overlap. One ends, the other starts later. The handoff file bridges the gap.
 4. **Transport-agnostic.** Git is the default, but the pattern works with any sync mechanism (iCloud, SFTP, Syncthing, etc.).
 5. **Human does nothing.** The entire point is to eliminate the human from the relay loop.
+
+## The Message Bus
+
+MEP already treats the repository as a durable message bus. v3 names that model so it can be evaluated against the interoperability gap Nadella described.
+
+### The room
+
+A private repo is the largest chat room in history that still has access control, an audit log, and conflict resolution. Every LLM with tokens and access to the repo is a participant. The human is an operator in that room, not the wire between participants.
+
+### What the primitives already are
+
+| Git / MEP artifact | Message-bus role |
+|---|---|
+| Commit | A message |
+| History | The transcript |
+| Pull request | A proposal |
+| Handoff entry | A shift-change post |
+| Identity file | Standing orders that load when a participant joins |
+
+No new daemon. No new server. The transport from Components 1–4 is the bus.
+
+### Channels
+
+Channels are first-class. They live as structured sections or files in the repo — for example a Skippy reply channel, a media channel, a project standup. They are not a parallel format.
+
+A channel still uses the handoff schema: newest-first, three sections (what happened, what's pending, what to watch out for), tag-in / tag-out when multiple agents write. The channel heading names the room. The entries are still the baton.
+
+### Contrast with model-locked memory
+
+Vendor sessions and model weights are not a shared memory. They expire, they are not portable across families, and they cannot be handed off without a human restating the work.
+
+MEP state lives in the repo. Any participant that can read the files can pick up the thread. That is the external harness: memory is outside the model.
 
 ## Milestone: First Autonomous CI Recovery
 
@@ -188,6 +228,8 @@ Without Hello, every new session on a different machine starts with "where are m
 **Added:** April 6, 2026
 **Status:** Concept | pending experimentation
 
+**v3 clarification:** Git is the durable message bus. AT Protocol, if ever adopted, is an optional real-time / ephemeral layer for concurrent sessions. It does not replace Git transport, the identity file, or the handoff file.
+
 ### The idea
 
 Use the AT Protocol (Bluesky) as a real-time messaging transport between agents.  Each agent gets a handle (e.g., `skippy.nukasoft.ai`, `bluto.nukasoft.ai`).  Agents follow each other and exchange messages via DMs.  The protocol provides encryption, federation, and identity for free.
@@ -201,9 +243,9 @@ Use the AT Protocol (Bluesky) as a real-time messaging transport between agents.
 - **Real-time:** No 30-minute git sync latency
 - **Open:** Well-documented API, no vendor lock-in
 
-### What it replaces
+### What it adds (not a replacement)
 
-Git transport (MEP v1) has a 30-minute sync cycle via `hotrod-autosync.timer`.  AT Protocol would give sub-second agent-to-agent messaging.  Git remains the durable state layer (handoff files, journals, skills).  AT Protocol becomes the ephemeral messaging layer.
+Git transport (MEP v1) has a 30-minute sync cycle via `hotrod-autosync.timer`.  AT Protocol would give sub-second agent-to-agent messaging.  Git remains the durable message bus (handoff files, journals, skills, channels).  AT Protocol, if adopted, is the optional ephemeral messaging layer.  It is not a second architecture.
 
 ### The commercial angle
 
@@ -423,6 +465,7 @@ Session started immediately.  No questions.  Full context from files.  Low meat 
 | **v1.0** | Same LLM, different machines | Machine â†’ Machine (via Git) |
 | **v1.1** | Different LLMs, same operator | LLM â†’ LLM (via conversation URL) |
 | **v2.0** | All work converges on project context | LLM â†’ Project/Skill (via Claude) |
+| **v3.0** | Repo as durable agent message bus; named channels | Participants â†’ Channels (via Git) |
 
 v1.1 treats cross-ecosystem conversations as events â€” something happened, context transferred, move on.  v2 treats them as **project contributions**.  Every Grok brainstorm, every ChatGPT research session, every Claude code sprint belongs to a project.  The project is the convergence point.
 
@@ -771,7 +814,7 @@ Before landing on the nginx approach, we smoke-tested with Google Docs as a shar
 
 This aligns with the broader NukaSoft security posture: PDFs encrypted at rest, dashboard behind firewall + VPN, all sensitive data on owned infrastructure.  The standup is just another resource in that model â€” not a special case that lives on someone else's cloud.
 
-**Future direction:** As the dashboard evolves into a full web app (the unplayer model), the standup endpoint becomes a first-class route in the React app â€” authenticated, encrypted, auditable, and capable of working offline.  The nginx GUID URL is the v2.1 primitive; the dashboard route is the v3 target.
+**Future direction:** As the dashboard evolves into a full web app (the unplayer model), the standup endpoint becomes a first-class route in the React app â€” authenticated, encrypted, auditable, and capable of working offline.  The nginx GUID URL is the v2.1 primitive; a dashboard route remains later work.  It is not a replacement for the Git message bus named in v3.0.
 
 ### Relationship to Other Components
 
@@ -803,11 +846,11 @@ Grok reads standup URL â†’ brainstorms with Pierre â†’ Pierre pastes c
 
 The loop is nearly closed.  Claude commits â†’ file is instantly live â†’ peer agents read it â†’ peer agents contribute â†’ Pierre pastes conversation URL â†’ Claude ingests â†’ Claude commits.  The only manual step: pasting one URL.
 
-### Remaining Gap & v3 Direction
+### Remaining Gap
 
 **The last meat puppet step:** Pierre pastes a Grok/ChatGPT conversation URL into a Claude session so Claude can ingest the peer agent's work.
 
-**v3 target:** Eliminate this step.  Options under consideration:
+v3.0 names the repo as the durable message bus and positions MEP against the interoperability gap Nadella described. It does not close this last paste step. Options under consideration remain:
 1. **Webhook receiver** â€” A simple HTTP POST endpoint on Hot Rod that accepts standup entries from peer agents.  Grok or ChatGPT outputs a curl command; Pierre runs it (or it auto-runs).
 2. **Polling** â€” Claude periodically checks known conversation URLs for updates.
 3. **Email relay** â€” Peer agents email standup entries to skippy@nukasoft.ai; Claude's inbox pipeline ingests them automatically.
@@ -859,6 +902,7 @@ Prior to 2.3 this document carried a stale version field.  Its body was maintain
 | 2.2 | 2026-05-05 | Publication pipeline automated |
 | 2.3 | 2026-08-11 | Reconciliation. Version metadata corrected, emergent pidgin recorded, version history added, website copies reconciled against this document as canonical |
 | **2.4** | **2026-08-11** | **Relicensed to full open source.** AGPL-3.0 replaced by Apache 2.0 for code and CC BY 4.0 for specifications.  Implementing MEP now requires no permission and imposes no obligation |
+| **3.0** | **2026-09-21** | **Named the Git-native message bus.** Nadella / All-In framing (external harness, cross-family interop, human-out-of-loop handoff). Channels as first-class in-repo sections. AT Protocol remains optional/ephemeral. Self-enforcing structure unchanged |
 
 **Canonical source:** this file.  The website renders from it.  Any other copy is a mirror and defers to this one on conflict.
 
