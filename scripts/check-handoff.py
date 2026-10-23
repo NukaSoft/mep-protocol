@@ -24,6 +24,16 @@ from pathlib import Path
 HEADER_RE = re.compile(
     r"^##\s+(\d{4}-\d{2}-\d{2})\s+[—–-]\s+(.+)$"
 )
+# UTF-8 U+2014 (E2 80 94) misread as Windows-1252. skippy-brain auto-sync
+# has rewritten examples/minimal/handoff.md to this form after #7.
+EM_DASH_MOJIBAKE = "\u00e2\u20ac\u201d"
+
+
+def normalize_handoff_text(text: str) -> str:
+    """Repair em-dash mojibake so '## YYYY-MM-DD' headers still parse."""
+    return text.replace(EM_DASH_MOJIBAKE, "\u2014")
+
+
 TAG_RE = re.compile(
     r"\*\*Tag-in:\*\*\s*([^\n|]+?)\s*\|\s*\*\*Tag-out:\*\*\s*([^\n]+?)\s*$",
     re.IGNORECASE | re.MULTILINE,
@@ -174,7 +184,9 @@ def check_file(path: Path) -> list[Issue]:
     baton = resolve_baton(path)
     if not baton.exists():
         return [Issue("error", f"{baton}: file not found")]
-    return check_text(baton.read_text(encoding="utf-8"), str(baton))
+    return check_text(
+        normalize_handoff_text(baton.read_text(encoding="utf-8")), str(baton)
+    )
 
 
 def example_handoffs(root: Path) -> list[Path]:
@@ -208,6 +220,7 @@ def self_test() -> int:
         ("valid.md", 0, 0),
         ("valid-v2-sameday.md", 0, 0),
         ("valid-active.md", 0, 0),
+        ("valid-mojibake-dash.md", 0, 0),
         ("invalid-order.md", 1, None),
         ("invalid-sameday.md", 1, None),
         ("invalid-missing-section.md", 1, None),
