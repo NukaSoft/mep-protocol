@@ -2,7 +2,17 @@ name: MEP handoff
 
 on:
   push:
+    paths:
+      - "examples/**/handoff.md"
+      - "tests/handoff/**"
+      - "scripts/check-handoff.py"
+      - ".github/workflows/mep-handoff.yml"
   pull_request:
+    paths:
+      - "examples/**/handoff.md"
+      - "tests/handoff/**"
+      - "scripts/check-handoff.py"
+      - ".github/workflows/mep-handoff.yml"
 
 jobs:
   check:
