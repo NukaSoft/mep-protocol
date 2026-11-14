@@ -6,6 +6,16 @@ Format: `## [version] â€” YYYY-MM-DD`
 
 ---
 
+## 2.5 | 2026-11-14
+
+### Component 10: Decision-Log Questions
+
+- Agents post every question to the project's GitHub issues log instead of raising it verbally with the owner.
+- Each entry is written as Question, Answer and Status, tagged **blocking** (prevents building) or **resolved non-issue** (settled, do not re-litigate).
+- Agents search the log first and never re-surface a resolved non-issue.
+
+---
+
 ## 2.4 | 2026-08-11
 
 ### Relicensed to full open source
