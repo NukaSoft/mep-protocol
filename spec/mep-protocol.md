@@ -1,13 +1,13 @@
 ---
 title: "MEP -- Meat Puppet Elimination Protocol"
 excerpt: "A self-enforcing asynchronous state relay for AI sessions across machines"
-version: "2.4"
-date: 2026-08-11
+version: "2.5"
+date: 2026-11-14
 authors: "Pierre Hulsebus & Skippy the Magnificent"
 ---
 
-**Version:** 2.4
-**Date:** August 11, 2026
+**Version:** 2.5
+**Date:** November 14, 2026
 **First published:** March 22, 2026
 **Authors:** Pierre Hulsebus & Skippy the Magnificent
 
@@ -816,6 +816,28 @@ Option 3 is the most likely path â€” the inbox pipeline already exists and 
 
 ---
 
+## Component 10: Decision-Log Questions
+
+Every question an agent raises is a written entry in the project's GitHub issues log, not a verbal back-and-forth with the owner.
+
+### Rules
+
+1. **Post, don't ask aloud.** An agent posts each question as a GitHub issue in the project repo. It does not raise questions verbally, in chat or on a call, as back-and-forth with the owner.
+2. **Decision-log format.** Each entry has three parts, in this order:
+   - **Question.** One question, citing the document and section it comes from.
+   - **Answer.** The owner's answer, written as the reply to that question.
+   - **Status.** One tag:
+     - **blocking**: unanswered, and it prevents building.
+     - **resolved non-issue**: settled. Do not re-litigate.
+3. **Never re-surface a resolved non-issue.** Before raising a question, an agent searches the issues log. If an entry tagged resolved non-issue covers it, the agent treats the answer as settled and does not ask again, in any form or wording.
+4. **Only blocking questions stop work.** An agent keeps working on everything a blocking question does not touch.
+
+### Why
+
+Verbal questions are lost between sessions, so the next agent asks them again and the owner becomes the message bus. A written log with a settled tag removes the human from that loop, the same way the handoff file does for state.
+
+---
+
 ## Sibling Spec: MEEP-ReadOnly-v1
 
 **Added:** April 29, 2026
@@ -858,7 +880,8 @@ Prior to 2.3 this document carried a stale version field.  Its body was maintain
 | 2.1 | 2026-04-29 | Sibling spec MEEP-ReadOnly-v1 for external peer agents |
 | 2.2 | 2026-05-05 | Publication pipeline automated |
 | 2.3 | 2026-08-11 | Reconciliation. Version metadata corrected, emergent pidgin recorded, version history added, website copies reconciled against this document as canonical |
-| **2.4** | **2026-08-11** | **Relicensed to full open source.** AGPL-3.0 replaced by Apache 2.0 for code and CC BY 4.0 for specifications.  Implementing MEP now requires no permission and imposes no obligation |
+| 2.4 | 2026-08-11 | Relicensed to full open source. AGPL-3.0 replaced by Apache 2.0 for code and CC BY 4.0 for specifications.  Implementing MEP now requires no permission and imposes no obligation |
+| **2.5** | **2026-11-14** | **Component 10, Decision-Log Questions.** Agents post questions to the GitHub issues log in question, answer and status form, tagged blocking or resolved non-issue, and never re-surface a resolved non-issue |
 
 **Canonical source:** this file.  The website renders from it.  Any other copy is a mirror and defers to this one on conflict.
 
