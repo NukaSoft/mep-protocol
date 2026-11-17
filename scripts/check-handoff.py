@@ -21,8 +21,12 @@ import re
 import sys
 from pathlib import Path
 
+# Date, dash-like separator, then machine/agent context.
+# The third alternative is UTF-8 U+2014 (E2 80 94) decoded as Windows-1252
+# (U+00E2 U+20AC U+201D). skippy-brain auto-sync rewrites published handoff
+# examples to that form; it is the same em dash, not a different separator.
 HEADER_RE = re.compile(
-    r"^##\s+(\d{4}-\d{2}-\d{2})\s+[—–-]\s+(.+)$"
+    r"^##\s+(\d{4}-\d{2}-\d{2})\s+(?:[\u2014\u2013-]|\u00e2\u20ac\u201d)\s+(.+)$"
 )
 TAG_RE = re.compile(
     r"\*\*Tag-in:\*\*\s*([^\n|]+?)\s*\|\s*\*\*Tag-out:\*\*\s*([^\n]+?)\s*$",
@@ -208,6 +212,7 @@ def self_test() -> int:
         ("valid.md", 0, 0),
         ("valid-v2-sameday.md", 0, 0),
         ("valid-active.md", 0, 0),
+        ("valid-mojibake-dash.md", 0, 0),
         ("invalid-order.md", 1, None),
         ("invalid-sameday.md", 1, None),
         ("invalid-missing-section.md", 1, None),
