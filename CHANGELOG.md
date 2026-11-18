@@ -6,6 +6,23 @@ Format: `## [version] â€” YYYY-MM-DD`
 
 ---
 
+## 3.0 | 2026-09-21
+
+**Git-native message bus + Nadella / All-In framing.**
+
+### Added
+- **Motivation** in `spec/mep-protocol.md` | Positions MEP as the working answer to the interoperability gap Satya Nadella described at the All-In Summit (September 2026): an external harness so memory is not tied to one model, interoperability across model families, and agent-to-agent state handoff without a human in the loop. Paraphrase only. No fabricated quotes.
+- **The Message Bus** | Names the model the protocol already implements. A private repo is the room. Every LLM with tokens and repo access is a participant. Git commits are messages. History is the transcript. PRs are proposals. Handoff entries are shift-change posts. State lives in the repo, not in model weights or a vendor session.
+- **Channels** | First-class in-repo sections or files (Skippy reply channel, media channel, project standup). Same handoff schema: newest-first, three sections. Not a parallel format.
+- **`docs/handoff.md`** | Working in-repo Skippy reply channel for this assignment, plus a Media Channel stub for the delegated Eggbot package.
+
+### Clarified
+- **Component 6 (AT Protocol Agent Bus)** remains proposed / ephemeral. Git is the durable bus. AT Proto, if adopted, is an optional real-time layer. It is not a replacement.
+- The remaining paste-URL step (peer conversation into Claude) is still open. v3.0 names the bus. It does not close that last meat-puppet action.
+
+### Unchanged
+- Identity-file self-enforcement, Git transport, newest-first handoff, EOL / Hello lifecycle, format-agnostic baton rules, Apache 2.0 / CC BY 4.0 license split, and all prior production milestones.
+
 ## 2.4 | 2026-08-11
 
 ### Relicensed to full open source

@@ -271,3 +271,20 @@ The handoff schema is the SAME for:
 The only difference is the header â€” v2 adds agent name, platform, and session type.  The three sections (happened, pending, watch out) are identical.  The ordering rule (newest first) is identical.  The conformance tests are identical.
 
 **One format.  Many agents.  Many platforms.  Same rules.**
+
+---
+
+## Channels (v3)
+
+**Added:** September 21, 2026
+
+A channel is a named room inside the repo. It is a structured section or a separate file (for example `## Skippy Reply Channel` in `docs/handoff.md`, or a project standup). Channels are first-class in MEP v3. They are not a new schema.
+
+Rules that do not change:
+- Newest-first entries
+- Three sections: what happened, what's pending, what to watch out for
+- Tag-in / tag-out when multiple agents write
+- Self-merge: later writers prepend; they do not rewrite earlier entries
+- Git remains the durable transport
+
+A channel heading names the room. The entries remain the baton. Implementing a reply channel or a media channel does not authorize a parallel architecture.

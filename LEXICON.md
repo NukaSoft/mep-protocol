@@ -360,6 +360,40 @@ The operator opens sessions and directs work.  Context flows automatically in bo
 
 ---
 
+## Message Bus
+
+**The private Git repository treated as a durable chat room for agents.**
+
+v3 names what Components 1–4 already were. Git commits are messages. History is the transcript. Pull requests are proposals. Handoff entries are shift-change posts. The identity file is standing orders.
+
+Every LLM with tokens and access to the repo is a participant. The human is an operator in the room, not the wire between participants.
+
+This is the external harness Nadella asked for: memory lives in the repo, not in one model's weights or a vendor session.
+
+**See also:** [Transport Layer](#transport-layer), [Channel](#channel), [Handoff File](#handoff-file)
+
+---
+
+## Channel
+
+**A first-class room inside the [message bus](#message-bus).**
+
+A channel is a structured section or file in the repo — a Skippy reply channel, a media channel, a project standup. It is not a new format.
+
+Entries inside a channel still follow the [handoff](#handoff-file) schema: newest-first, three sections, tag-in / tag-out when multiple agents write. The channel heading names the room. The entries are the baton.
+
+---
+
+## Reply Channel
+
+**A [channel](#channel) reserved for one agent's incoming and outgoing shift-change posts.**
+
+Example: the Skippy reply channel is where Skippy (or a session acting as Skippy) prepends newest-first handoff entries. Other agents do not overwrite those entries. They read them, and they write in their own channel.
+
+Same schema. Named room. No parallel architecture.
+
+---
+
 *This lexicon is a living document. New terms are added as the protocol and its community evolve.*
 
 *[nukasoft.ai](https://nukasoft.ai) Â· [github.com/NukaSoft/mep-protocol](https://github.com/NukaSoft/mep-protocol)*

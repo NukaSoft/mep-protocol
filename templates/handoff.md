@@ -6,6 +6,8 @@ Last updated at end of session. Read this first.
 MEP Protocol â€” Baton Template v1.0
 Newest entry ALWAYS on top.
 Three sections per entry: What happened / What's pending / Watch out for
+Optional: channel headings (e.g. ## Skippy Reply Channel) may group entries.
+Entries inside a channel still follow newest-first + three sections.
 License: Apache-2.0 | Copyright 2026 Pierre Hulsebus / NukaSoft.AI
 -->
 
