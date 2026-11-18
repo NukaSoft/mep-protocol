@@ -9,32 +9,6 @@
 
 ---
 
-## Log Entry 006
-**Date:** 2026-09-21
-**Sprint:** MEP v3 — Nadella Framing + Message Bus
-
-### Strategic Intent (Pierre)
-Pierre directed a human-authored bump of the public protocol from v2.4 to v3.0 after Satya Nadella, at the All-In Summit, called for better standards for how LLMs communicate with each other: an external harness so memory is not tied to one model, interoperability across model families, and agent-to-agent state handoff without a human in the loop.
-
-Pierre's instruction: position MEP v3 as the practical, Git-native answer to that gap. Preserve the self-enforcing structure. Do not invent a parallel architecture. Git remains the durable bus. Channels (Skippy reply channel, media channel) are first-class in-repo sections or files, not a new format.
-
-Pierre also directed a working in-repo Skippy reply channel at `docs/handoff.md` for this assignment, because the private skippy-brain handoff is not reachable from the drafting environment. Media package (YouTube explainer + LinkedIn series) delegated to Dr. Eggbot. Pierre-voice must not be freehanded.
-
-### Technical Steerage
-- Version asserted as 3.0 everywhere the public version is stated (spec frontmatter, headers, README badge, CHANGELOG)
-- Nadella / All-In framing near the top — paraphrase the ask, do not fabricate quotes
-- Dedicated message-bus section: private repo as the room, LLMs with tokens/access as participants, Git commits as messages, PRs as proposals, handoff entries as shift-change posts
-- Component 6 (AT Protocol Agent Bus) stays proposed/ephemeral — optional real-time layer, not a Git replacement
-- Preserve identity-file self-enforcement, newest-first handoff, EOL/Hello lifecycle, format-agnostic baton rules, Apache 2.0 / CC BY 4.0 license split
-- All existing milestones and production evidence stay intact
-
-### Machine Execution (Claude / Grok Bot Skippy)
-- Drafted MEP v3 spec PR on `NukaSoft/mep-protocol`
-- Updated `spec/mep-protocol.md`, `CHANGELOG.md`, `README.md`, `LEXICON.md`, `NUKA-LOG.md`, `spec/handoff-schema.md`
-- Created `docs/handoff.md` as the in-repo Skippy reply channel, plus Media Channel stub
-
----
-
 ## Log Entry 005
 **Date:** 2026-04-15
 **Sprint:** Public Relay Automation + Exploration Record
@@ -232,4 +206,4 @@ Identified a handoff conflict that occurred when a Mac worktree session (DNS inf
 2. **Worktree branches are MEP's multi-session primitive.** Claude Code worktrees (`--isolation worktree`) create branches automatically. When these branches write to handoff.md, they create divergence that must be merged. The protocol handles this because the handoff schema is designed for it.
 3. **Second confirmed autonomous resolution.** Entry 002 was the first. This is the second. The pattern is consistent: read the file, identify the newest entry by date, position correctly, merge.
 
-<!-- sync:2026-11-17T20:10:04-05:00 | Uhura | 13 understandings published -->
+<!-- sync:2026-11-17T23:10:04-05:00 | Uhura | 13 understandings published -->
